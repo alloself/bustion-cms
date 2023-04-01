@@ -1,0 +1,46 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('blocks', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('name');
+            $table->longText('slug')->nullable();
+            $table->string('title')->nullable();
+            $table->string('subtitle')->nullable();
+            $table->string('link')->nullable();
+            $table->longText('content')->nullable();
+            $table->bigInteger('order')->default(0);
+            $table->uuid('template_id')->nullable();
+            $table->uuid('page_id')->nullable();
+            $table->unsignedInteger('_lft')->default(0);
+            $table->unsignedInteger('_rgt')->default(0);
+            $table->uuid('parent_id')->nullable();
+            $table->timestamps();
+
+            $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
+            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('blocks');
+    }
+};
