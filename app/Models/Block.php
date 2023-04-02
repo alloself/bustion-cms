@@ -14,6 +14,8 @@ class Block extends Model
 {
     use HasFactory, NodeTrait, HasUuids, HasSlug;
 
+    protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show'];
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

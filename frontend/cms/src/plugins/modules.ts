@@ -6,7 +6,7 @@ export const setupModules = async (moduleKeys: string[]) => {
   const modules = await moduleKeys.reduce((acc, module) => {
     import(`@/modules/${module}.ts`).then(async (data) => {
       const fields = await import(`@/fields/${module}.ts`);
-      acc[data.key] = { ...data, fields: fields.default };
+      acc[data.key] = { ...data, getFields: fields.default };
     });
 
     return acc;

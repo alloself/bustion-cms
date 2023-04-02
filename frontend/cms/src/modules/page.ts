@@ -1,7 +1,20 @@
+import { ref } from "vue";
+
 const key = "page";
 
 const title = "Страницы";
 
 const icon = "mdi-file";
 
-export { key, title, icon };
+const headers = ref([
+  {
+    title: "Заголовок",
+    value: "title",
+  },
+  {
+    title: "Ссылка",
+    value: "slug",
+  },
+]);
+
+export { key, title, icon, headers };

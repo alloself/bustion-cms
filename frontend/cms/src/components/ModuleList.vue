@@ -2,16 +2,16 @@
   <v-data-table
     v-model="selected"
     show-select
-    :headers="headers"
+    :headers="module.headers"
     :items="items"
     :items-length="paginateItems?.total"
     :loading="loading"
     @update:options="getItems"
     @click:row="rowClick"
   >
-  <template #top>
+    <!--  <template #top>
     <v-text-field></v-text-field>
-  </template>
+  </template>-->
     <!-- eslint-disable-next-line vue/valid-v-slot-->
     <template #footer.prepend>
       <v-tooltip location="top" text="Создать" color="primary">
@@ -56,16 +56,6 @@ const selected = ref([]);
 const loading = ref(false);
 const paginateItems = ref();
 const items = computed(() => paginateItems.value?.data || []);
-const headers = ref([
-  {
-    title: "Заголовок",
-    value: "title",
-  },
-  {
-    title: "Ссылка",
-    value: "slug",
-  },
-]);
 
 const getItems = async (options: any) => {
   loading.value = true;

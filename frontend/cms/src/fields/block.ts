@@ -4,7 +4,10 @@ import * as yup from "yup";
 import WYSIWYGEditor from "@/components/WYSIWYGEditor.vue";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
 
-export default (function (): Ref<IFormField[]> {
+export default function (options?: {
+  entity?: Record<string, unknown>;
+  predefinedValues?: Record<string, unknown>;
+}): Ref<IFormField[]> {
   const fields = ref<IFormField[]>([
     {
       component: "v-text-field",
@@ -70,7 +73,7 @@ export default (function (): Ref<IFormField[]> {
         name: "template_id",
         itemValue: "id",
         itemTitle: "name",
-        module: "template"
+        module: "template",
       },
     },
     {
@@ -82,7 +85,8 @@ export default (function (): Ref<IFormField[]> {
         name: "page_id",
         itemValue: "id",
         itemTitle: "title",
-        module: "page"
+        module: "page",
+        readonly: Boolean(options?.predefinedValues?.page_id),
       },
     },
     {
@@ -92,4 +96,4 @@ export default (function (): Ref<IFormField[]> {
   ]);
 
   return fields;
-})();
+}

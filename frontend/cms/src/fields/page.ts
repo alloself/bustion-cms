@@ -2,9 +2,12 @@ import { IFormField } from "./index";
 import { ref, Ref, markRaw } from "vue";
 import * as yup from "yup";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
-import BlocksTable from "@/components/BlocksTable.vue";
+import RelationsTable from "@/components/RelationsTable.vue";
 
-export default (function (): Ref<IFormField[]> {
+export default function (options?: {
+  entity?: Record<string, unknown>;
+  predefinedValues?: Record<string, unknown>;
+}): Ref<IFormField[]> {
   const fields = ref<IFormField[]>([
     {
       component: "v-text-field",
@@ -77,15 +80,14 @@ export default (function (): Ref<IFormField[]> {
       rule: yup.boolean(),
     },
     {
-      component: markRaw(RelationFieldAutocomplete),
-      key: "parent_id",
+      component: "v-checkbox",
+      key: "show",
       props: {
-        autocomplete: "parent_id",
-        label: "Родительская страница",
-        name: "parent_id",
-        itemValue: "id",
-        module: "page",
+        autocomplete: "show",
+        label: "Показывать страницу",
+        name: "show",
       },
+      rule: yup.boolean(),
     },
     {
       component: markRaw(RelationFieldAutocomplete),
@@ -96,14 +98,29 @@ export default (function (): Ref<IFormField[]> {
         name: "template_id",
         itemValue: "id",
         itemTitle: "name",
-        module: "template"
+        module: "template",
       },
-    },
-    {
-      component: markRaw(BlocksTable),
-      key: "blocks",
     },
   ]);
 
+  if (options?.entity?.id) {
+    fields.value.push({
+      component: markRaw(RelationsTable),
+      key: "blocks",
+      props: {
+        predefinedValues: { page_id: options.entity.id },
+        module: 'block'
+      },
+    });
+    fields.value.push({
+      component: markRaw(RelationsTable),
+      key: "children",
+      props: {
+        predefinedValues: { parent_id: options.entity.id },
+        module: 'page'
+      },
+    });
+  }
+
   return fields;
-})();
+}

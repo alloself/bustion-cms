@@ -5,11 +5,11 @@
     @update:model-value="onUpdateModalValue"
     v-bind="$attrs"
     :item-value="itemValue"
-    clearable
+    :clearable="!$attrs.readonly"
     @click:prepend="addRelationEntity"
     @click:prependInner="addRelationEntity"
-    prepend-icon="mdi-plus"
-    :prepend-inner-icon="modelValue ? 'mdi-pencil' : ''"
+    :prepend-icon="$attrs.readonly ? '' : 'mdi-plus'"
+    :prepend-inner-icon="modelValue && !$attrs.readonly ? 'mdi-pencil' : ''"
     :loading="$attrs.loading as boolean || loading"
     :no-data-text="
       search.length > 2 ? 'Нет данных' : 'Введите более 2 символов для поиска'
@@ -32,7 +32,14 @@
 <script setup lang="ts">
 import { client } from "@/plugins/axios";
 import { useModuleStore } from "@/stores/module";
-import { computed, defineAsyncComponent, inject, ref, watch } from "vue";
+import {
+  computed,
+  defineAsyncComponent,
+  inject,
+  onMounted,
+  ref,
+  watch,
+} from "vue";
 const ModuleDetail = defineAsyncComponent(
   () => import("@/components/ModuleDetail.vue")
 );
@@ -92,9 +99,11 @@ const onModalClose = () => {
   }
 };
 
-if (props.modelValue) {
-  await getItems();
-}
+onMounted(() => {
+  if (props.modelValue) {
+    getItems();
+  }
+});
 
 watch(
   () => search.value,

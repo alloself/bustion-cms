@@ -1,11 +1,13 @@
 <template>
-  <v-card outlined rounded="0" flat class="h-100 d-flex flex-column overflow-auto w-100" :loading="loading">
+  <v-card
+    outlined
+    rounded="0"
+    flat
+    class="h-100 d-flex flex-column overflow-auto w-100"
+    :loading="loading"
+  >
     <v-card-text>
-      <smart-form
-        :fields="module.fields"
-        v-if="initalValues || !modelId"
-      ></smart-form>
-      <v-spacer></v-spacer>
+      <smart-form v-if="showForm" :fields="fields"></smart-form>
     </v-card-text>
     <v-spacer></v-spacer>
     <v-divider></v-divider>
@@ -35,8 +37,9 @@
 
 <script lang="ts" setup>
 import { client } from "@/plugins/axios";
+import { router } from "@/router";
 import { useModuleStore } from "@/stores/module";
-import { getChangedFormFields, getModuleKeyByRoute } from "@/utils";
+import { capitalize, getChangedFormFields, getModuleKeyByRoute } from "@/utils";
 import { FormContext } from "vee-validate";
 import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -46,9 +49,17 @@ const SmartForm = defineAsyncComponent(
 const moduleStore = useModuleStore();
 
 const props = withDefaults(
-  defineProps<{ id?: string; module?: string; modal?: boolean }>(),
+  defineProps<{
+    id?: string;
+    module?: string;
+    modal?: boolean;
+    predefinedValues?: Record<string, unknown>;
+  }>(),
   {
     modal: false,
+    predefinedValues: () => {
+      return {};
+    },
   }
 );
 
@@ -63,10 +74,15 @@ const route = useRoute();
 const form = ref<FormContext>();
 const initalValues = ref();
 const loading = ref(false);
+const fields = ref();
 
 const modelId = computed(() =>
   props.modal && props.module ? props.id : route.params.id
 );
+
+const showForm = computed(() => {
+  return fields.value && (initalValues.value || !modelId.value);
+});
 
 const onCreate = async () => {
   const validateRezult = await form.value?.validate();
@@ -82,6 +98,11 @@ const onCreate = async () => {
 
       if (props.modal) {
         emits("onCreate", data);
+      } else {
+        router.push({
+          name: `${capitalize(module.value.key)}Detail`,
+          params: { id: data.id },
+        });
       }
 
       console.log(data);
@@ -104,8 +125,13 @@ const onUpdate = async () => {
         getChangedFormFields(initalValues.value, form.value?.values)
       );
 
+      fields.value = module.value.getFields({
+        entity: data,
+        predefinedValues: props.predefinedValues,
+      }).value;
+
       form.value?.resetForm({ values: data });
-      initalValues.value = data;
+      initalValues.value = { ...data, ...props.predefinedValues };
     } catch (e) {
       console.log(e);
     } finally {
@@ -131,16 +157,28 @@ onMounted(async () => {
       const { data } = await client.get(
         `/api/cms/${module.value.key}/${modelId.value}`
       );
-      initalValues.value = data;
+
+      fields.value = module.value.getFields({
+        entity: data,
+        predefinedValues: props.predefinedValues,
+      }).value;
+
+      initalValues.value = { ...data, ...props.predefinedValues };
     } catch (e) {
       console.log(e);
     } finally {
       loading.value = false;
     }
+  } else {
+    initalValues.value = { ...props.predefinedValues };
+    fields.value = module.value.getFields({
+      predefinedValues: props.predefinedValues,
+    }).value;
   }
 });
 
 provide("form", form);
 provide("loading", loading);
 provide("initalValues", initalValues);
+provide("predefinedValues", props.predefinedValues);
 </script>

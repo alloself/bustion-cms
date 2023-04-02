@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('subtitle')->nullable();
             $table->string('link')->nullable();
+            $table->boolean('show')->default(true);
             $table->longText('content')->nullable();
             $table->bigInteger('order')->default(0);
             $table->uuid('template_id')->nullable();

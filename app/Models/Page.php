@@ -17,14 +17,16 @@ class Page extends Model
         \Laravel\Scout\Searchable::usesSoftDelete insteadof \Kalnoy\Nestedset\NodeTrait;
     }
 
-    protected $fillable = ['title', 'description', 'keywords', 'slug', 'parent_id', 'index', 'path', 'language_id', 'template_id', 'subtitle'];
+    protected $fillable = ['title', 'description', 'keywords', 'slug', 'parent_id', 'index', 'path', 'language_id', 'template_id', 'subtitle', 'show'];
 
     protected $casts = [
         'index' => 'boolean',
+        'show' => 'boolean'
     ];
 
     protected static $baseRelations = [
         'blocks',
+        'children'
     ];
 
     public static function getRelationsArray()
@@ -56,14 +58,14 @@ class Page extends Model
 
     public function generatePath()
     {
-        if (! $this->index) {
+        if (!$this->index) {
             if ($this->isRoot()) {
                 $this->path = $this->slug;
             } else {
                 if ($this->parent->path == '/') {
-                    $this->path = '/'.$this->slug;
+                    $this->path = '/' . $this->slug;
                 } else {
-                    $this->path = $this->parent->path.'/'.$this->slug;
+                    $this->path = $this->parent->path . '/' . $this->slug;
                 }
             }
         } else {

@@ -1,11 +1,16 @@
 import { IFormField } from "@/fields/index";
 import { defineStore } from "pinia";
+import { Ref } from "vue";
 
 export interface IModule {
-  fields: IFormField[];
+  getFields: (options: {
+    entity?: Record<string, unknown>;
+    predefinedValues?: Record<string, unknown>;
+  }) => Ref<IFormField[]>;
   icon: string;
   key: string;
   title: string;
+  headers?: Array<Record<string, unknown>>;
 }
 
 export const useModuleStore = defineStore("module", {

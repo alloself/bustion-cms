@@ -71,8 +71,10 @@
       </template>
     </v-app-bar>
     <v-main>
-      <router-view v-slot="{ Component, route }">
-        <component :is="Component" :key="route.fullPath" />
+      <router-view v-slot="{ Component }">
+        <transition name="slide-x-transition">
+          <component :is="Component" :key="routerKey" />
+        </transition>
       </router-view>
       <v-navigation-drawer
         v-model="rightDrawer"
@@ -86,10 +88,11 @@
   </v-app>
 </template>
 <script lang="ts" setup>
-import { defineAsyncComponent, provide, ref } from "vue";
+import { computed, defineAsyncComponent, provide, ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import { useModuleStore } from "@/stores/module";
 import { useTheme } from "vuetify";
+import { useRoute } from "vue-router";
 const Logo = defineAsyncComponent(() => import("@/components/Logo.vue"));
 const userStore = useUserStore();
 const moduleStore = useModuleStore();
@@ -97,12 +100,15 @@ const theme = useTheme();
 const leftDrawer = ref(true);
 const rightDrawer = ref(false);
 const menu = ref(false);
+const route = useRoute();
 
 const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark
     ? "light"
     : "defaultDarkTheme";
 };
+
+const routerKey = computed(() => route.fullPath);
 
 provide("rightDrawer", rightDrawer);
 </script>
