@@ -23,6 +23,7 @@ return new class extends Migration
             $table->longText('keywords')->nullable();
             $table->boolean('index')->default(false);
             $table->boolean('show')->default(true);
+            $table->json('attributes')->nullable();
             $table->uuid('template_id')->nullable();
             $table->uuid('language_id')->nullable();
             $table->unsignedInteger('_lft')->default(0);

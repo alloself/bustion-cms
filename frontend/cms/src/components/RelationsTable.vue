@@ -53,16 +53,6 @@
         </template>
         <span>Удалить выбранное</span>
       </v-tooltip>
-      <RelationFieldAutocomplete
-        class="ml-2"
-        style="maxwidth: 30%"
-        item-value="title"
-        :module="props.module"
-        return-object
-        @update:model-value="onSearchInput"
-        density="compact"
-        hide-details
-      ></RelationFieldAutocomplete>
       <v-spacer></v-spacer>
     </v-card-actions>
   </v-card>
