@@ -3,7 +3,10 @@ import { ref, Ref, markRaw } from "vue";
 import * as yup from "yup";
 import CodeEditor from "@/components/CodeEditor.vue";
 
-export default (function (): Ref<IFormField[]> {
+export default function (options?: {
+  entity?: Record<string, unknown>;
+  predefinedValues?: Record<string, unknown>;
+}): Ref<IFormField[]> {
   const fields = ref<IFormField[]>([
     {
       component: "v-text-field",
@@ -23,4 +26,4 @@ export default (function (): Ref<IFormField[]> {
   ]);
 
   return fields;
-})();
+}

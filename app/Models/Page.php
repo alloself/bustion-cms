@@ -17,7 +17,7 @@ class Page extends Model
         \Laravel\Scout\Searchable::usesSoftDelete insteadof \Kalnoy\Nestedset\NodeTrait;
     }
 
-    protected $fillable = ['title', 'description', 'keywords', 'slug', 'parent_id', 'index', 'path', 'language_id', 'template_id', 'subtitle', 'show'];
+    protected $fillable = ['title', 'meta', 'attributes', 'slug', 'parent_id', 'index', 'path', 'language_id', 'template_id', 'subtitle', 'show'];
 
     protected $casts = [
         'index' => 'boolean',

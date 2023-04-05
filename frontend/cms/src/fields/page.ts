@@ -3,6 +3,7 @@ import { ref, Ref, markRaw } from "vue";
 import * as yup from "yup";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
 import RelationsTable from "@/components/RelationsTable.vue";
+import EntityFieldJSONEditor from "@/components/EntityFieldJSONEditor.vue";
 
 export default function (options?: {
   entity?: Record<string, unknown>;
@@ -48,28 +49,6 @@ export default function (options?: {
       rule: yup.string(),
     },
     {
-      component: "v-text-field",
-      key: "keywords",
-      props: {
-        autocomplete: "keywords",
-        label: "Meta keywords",
-        name: "keywords",
-        type: "text",
-      },
-      rule: yup.string(),
-    },
-    {
-      component: "v-text-field",
-      key: "description",
-      props: {
-        autocomplete: "description",
-        label: "Metaa description",
-        name: "description",
-        type: "text",
-      },
-      rule: yup.string(),
-    },
-    {
       component: "v-checkbox",
       key: "index",
       props: {
@@ -101,6 +80,33 @@ export default function (options?: {
         module: "template",
       },
     },
+    /*
+    {
+      component: markRaw(RelationFieldAutocomplete),
+      key: "language_id",
+      props: {
+        autocomplete: "language_id",
+        label: "Язык",
+        name: "language_id",
+        itemValue: "id",
+        itemTitle: "name",
+        module: "language",
+      },
+    },*/
+    {
+      component: markRaw(EntityFieldJSONEditor),
+      key: "meta",
+      props: {
+        title: "Мета",
+      },
+    },
+    {
+      component: markRaw(EntityFieldJSONEditor),
+      key: "attributes",
+      props: {
+        title: "Атрибуты",
+      },
+    },
   ]);
 
   if (options?.entity?.id) {
@@ -109,7 +115,7 @@ export default function (options?: {
       key: "blocks",
       props: {
         predefinedValues: { page_id: options.entity.id },
-        module: 'block'
+        module: "block",
       },
     });
     fields.value.push({
@@ -117,7 +123,7 @@ export default function (options?: {
       key: "children",
       props: {
         predefinedValues: { parent_id: options.entity.id },
-        module: 'page'
+        module: "page",
       },
     });
   }
