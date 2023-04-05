@@ -19,8 +19,7 @@ return new class extends Migration
             $table->longText('subtitle')->nullable();
             $table->longText('path')->nullable();
             $table->longText('slug');
-            $table->longText('description')->nullable();
-            $table->longText('keywords')->nullable();
+            $table->json('meta')->nullable();
             $table->boolean('index')->default(false);
             $table->boolean('show')->default(true);
             $table->json('attributes')->nullable();
