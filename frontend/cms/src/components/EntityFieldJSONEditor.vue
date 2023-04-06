@@ -126,20 +126,23 @@ const headers = ref([
 ]);
 
 const addNewProperty = () => {
-  console.log(newProperty.value);
   emits("update:model-value", {
     ...props.modelValue,
     [newProperty.value.key]: newProperty.value.value,
   });
-  showCreate.value = false
+  showCreate.value = false;
 };
 
 const items = computed(() => {
-  return Object.keys(props.modelValue).map((key) => {
-    return {
-      key: key,
-      value: props.modelValue[key],
-    };
-  });
+  if (props.modelValue) {
+    return Object.keys(props.modelValue).map((key) => {
+      return {
+        key: key,
+        value: props.modelValue[key],
+      };
+    });
+  } else {
+    return [];
+  }
 });
 </script>

@@ -21,7 +21,8 @@ class Page extends Model
 
     protected $casts = [
         'index' => 'boolean',
-        'show' => 'boolean'
+        'show' => 'boolean',
+        'meta' => 'array'
     ];
 
     protected static $baseRelations = [
