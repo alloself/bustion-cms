@@ -17,6 +17,9 @@ export default createVuetify({
     VTextField: {
       variant: 'outlined',
     },
+    VAutocomplete: {
+      variant: 'outlined',
+    },
   },
   components: { VDataTable, VTextField },
   theme: {
