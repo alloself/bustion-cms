@@ -41,7 +41,7 @@ import { router } from "@/router";
 import { useModuleStore } from "@/stores/module";
 import { capitalize, getChangedFormFields, getModuleKeyByRoute } from "@/utils";
 import { FormContext } from "vee-validate";
-import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
+import { computed, defineAsyncComponent, onMounted, onUnmounted, provide, ref } from "vue";
 import { useRoute } from "vue-router";
 const SmartForm = defineAsyncComponent(
   () => import("@/components/SmartForm.vue")

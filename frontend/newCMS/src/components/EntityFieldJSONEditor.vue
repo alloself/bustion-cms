@@ -5,7 +5,7 @@
         {{ title }}
       </span>
     </template>
-    <v-data-table :headers="headers" :items="items" :loading="loading">
+    <v-data-table v-model="selected" show-select :headers="headers" :items="items" :loading="loading">
       <template #bottom><div></div></template>
       <!--<template #item.value>{{ new Date() }}</template>-->
     </v-data-table>

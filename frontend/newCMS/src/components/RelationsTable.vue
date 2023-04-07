@@ -60,8 +60,7 @@
 
 <script lang="ts" setup>
 import { useModuleStore } from "@/stores/module";
-import { capitalize } from "@/utils";
-import { ref, computed, inject, defineAsyncComponent } from "vue";
+import { ref, computed, inject, defineAsyncComponent, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 
 const ModuleDetail = defineAsyncComponent(
@@ -132,6 +131,12 @@ const onModalClose = () => {
     rightDrawer.value = false;
   }
 };
+
+
+onBeforeUnmount(() => {
+  onModalClose()
+})
+
 </script>
 <style lang="scss">
 .v-data-table__tr {
