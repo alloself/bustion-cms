@@ -28,7 +28,6 @@ export default function (options?: {
       props: {
         autocomplete: "subtitle",
         label: "Подзаголовок",
-
         name: "subtitle",
         type: "text",
       },
@@ -80,7 +79,6 @@ export default function (options?: {
         module: "template",
       },
     },
-    /*
     {
       component: markRaw(RelationFieldAutocomplete),
       key: "language_id",
@@ -89,10 +87,10 @@ export default function (options?: {
         label: "Язык",
         name: "language_id",
         itemValue: "id",
-        itemTitle: "name",
+        itemTitle: "title",
         module: "language",
       },
-    },*/
+    },
     {
       component: markRaw(EntityFieldJSONEditor),
       key: "meta",

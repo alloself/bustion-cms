@@ -10,6 +10,7 @@ use Kalnoy\Nestedset\NodeTrait;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Page extends Model
 {
@@ -39,6 +40,16 @@ class Page extends Model
     public function blocks(): HasMany
     {
         return $this->hasMany(Block::class);
+    }
+
+    public function template(): BelongsTo
+    {
+        return $this->belongsTo(Template::class);
+    }
+
+    public function language(): BelongsTo
+    {
+        return $this->belongsTo(Language::class);
     }
 
     public function toSearchableArray()

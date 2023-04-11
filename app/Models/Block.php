@@ -14,7 +14,18 @@ class Block extends Model
 {
     use HasFactory, NodeTrait, HasUuids, HasSlug;
 
-    protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show'];
+    protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show', 'parent_id'];
+
+    protected static $baseRelations = [
+        'template',
+        'page',
+        'children'
+    ];
+
+    public static function getRelationsArray()
+    {
+        return self::$baseRelations;
+    }
 
     public function getSlugOptions(): SlugOptions
     {
@@ -26,5 +37,10 @@ class Block extends Model
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
+    }
+
+    public function template(): BelongsTo
+    {
+        return $this->belongsTo(Template::class);
     }
 }

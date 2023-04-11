@@ -3,11 +3,13 @@ import { ref, Ref, markRaw } from "vue";
 import * as yup from "yup";
 import WYSIWYGEditor from "@/components/WYSIWYGEditor.vue";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
+import RelationsTable from "@/components/RelationsTable.vue";
 
 export default function (options?: {
   entity?: Record<string, unknown>;
   predefinedValues?: Record<string, unknown>;
 }): Ref<IFormField[]> {
+  console.log(options);
   const fields = ref<IFormField[]>([
     {
       component: "v-text-field",
@@ -76,7 +78,25 @@ export default function (options?: {
         module: "template",
       },
     },
+
     {
+      component: markRaw(WYSIWYGEditor),
+      key: "content",
+    },
+  ]);
+
+  if (options?.entity?.id) {
+    fields.value.push({
+      component: markRaw(RelationsTable),
+      key: "children",
+      props: {
+        predefinedValues: { parent_id: options.entity.id },
+        module: "block",
+      },
+    });
+  }
+  if (options?.predefinedValues?.page_id) {
+    fields.value.push({
       component: markRaw(RelationFieldAutocomplete),
       key: "page_id",
       props: {
@@ -88,12 +108,8 @@ export default function (options?: {
         module: "page",
         readonly: Boolean(options?.predefinedValues?.page_id),
       },
-    },
-    {
-      component: markRaw(WYSIWYGEditor),
-      key: "content",
-    },
-  ]);
+    });
+  }
 
   return fields;
 }

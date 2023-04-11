@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlockController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Http\Request;
@@ -25,10 +26,12 @@ Route::prefix('cms')->group(function () {
         Route::apiResource('page', PageController::class);
         Route::apiResource('template', TemplateController::class);
         Route::apiResource('block', BlockController::class);
+        Route::apiResource('language', LanguageController::class);
         Route::prefix('destroy')->group(function () {
             Route::post('page', [PageController::class, 'deleteMany']);
             Route::post('template', [TemplateController::class, 'deleteMany']);
             Route::post('block', [BlockController::class, 'deleteMany']);
+            Route::post('language', [LanguageController::class, 'deleteMany']);
         });
     });
 });

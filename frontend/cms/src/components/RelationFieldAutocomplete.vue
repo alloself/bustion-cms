@@ -11,9 +11,7 @@
     :prepend-icon="$attrs.readonly ? '' : 'mdi-plus'"
     :prepend-inner-icon="modelValue && !$attrs.readonly ? 'mdi-pencil' : ''"
     :loading="$attrs.loading as boolean || loading"
-    :no-data-text="
-      search.length > 2 ? 'Нет данных' : 'Введите более 2 символов для поиска'
-    "
+    no-data-text="Нет данных"
     :items="items"
   >
   </v-autocomplete>
@@ -108,9 +106,10 @@ onMounted(() => {
 watch(
   () => search.value,
   (value: string) => {
-    if (value.length > 2) {
-      getItems();
-    }
+    getItems();
+  },
+  {
+    immediate: true,
   }
 );
 
