@@ -30,10 +30,10 @@ class PageController extends Controller
         $path = array_key_exists('path', $request->route()->parameters) ? $request->route()->parameters['path'] : '/';
         $page = Page::wherePath($path)->whereHas('language', function (Builder $query) {
             $query->where('key', App::getLocale());
-        })->with('blocks')->first();
+        })->with('blocks.descendants')->first();
 
         $page->blocks->each(function ($item, $key) {
-            $item->children = Block::descendantsOf($item->id)->toTree($item->id);
+            $item->children = $item->descendants->toTree($item->id);
         });
 
         dump($page);
