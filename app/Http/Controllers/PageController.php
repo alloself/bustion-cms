@@ -32,8 +32,8 @@ class PageController extends Controller
             $query->where('key', App::getLocale());
         })->with('blocks.descendants')->first();
 
-        $page->blocks->each(function ($item, $key) {
-            $item->children = $item->descendants->toTree($item->id);
+        $page->blocks->map(function ($item, $key) {
+            $item->setRelation('children', $item->descendants->toTree($item->id));
         });
 
         dump($page);
