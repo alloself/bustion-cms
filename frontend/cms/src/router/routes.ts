@@ -6,6 +6,7 @@ const getModuleRoutes = (key: string) => {
     meta: {
       module: key,
     },
+    alias: undefined as string | undefined,
     name: `${capitalize(key)}List`,
     component: () => import(`@/components/ModuleList.vue`),
   };

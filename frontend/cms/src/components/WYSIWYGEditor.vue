@@ -1,5 +1,5 @@
 <template>
-  <v-sheet variant="outlined" :border="2" border rounded>
+  <v-sheet variant="outlined" :border="2" rounded>
     <v-toolbar density="compact" dark>
       <v-btn-group v-if="editor" multiple class="flex">
         <v-btn
