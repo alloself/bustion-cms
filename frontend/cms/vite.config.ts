@@ -5,10 +5,6 @@ import { fileURLToPath, URL } from "node:url";
 import { resolve } from "path";
 import { rm } from "node:fs/promises";
 
-/**
- * @param newFilename {string}
- * @returns {import('vite').Plugin}
- */
 const renameIndexPlugin = (newFilename) => {
   if (!newFilename) return;
 
@@ -22,6 +18,18 @@ const renameIndexPlugin = (newFilename) => {
   };
 };
 
+const removeBuildFolder = () => {
+  return {
+    name: "Cleaning assets folder",
+    async buildStart() {
+      await rm(resolve(__dirname, "../../public/cms"), {
+        recursive: true,
+        force: true,
+      });
+    },
+  };
+};
+
 export default defineConfig({
   plugins: [
     vue({
@@ -31,15 +39,7 @@ export default defineConfig({
       autoImport: true,
     }),
     renameIndexPlugin("admin.blade.php"),
-    {
-      name: "Cleaning assets folder",
-      async buildStart() {
-        await rm(resolve(__dirname, "../../public/cms"), {
-          recursive: true,
-          force: true,
-        });
-      },
-    },
+    removeBuildFolder(),
   ],
   define: { "process.env": {} },
   resolve: {
@@ -52,6 +52,7 @@ export default defineConfig({
     port: 3000,
   },
   build: {
+    emptyOutDir: false,
     outDir: "../../",
     rollupOptions: {
       output: {
