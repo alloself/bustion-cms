@@ -16,7 +16,7 @@ const renameIndexPlugin = (newFilename) => {
     enforce: "post",
     generateBundle(options, bundle) {
       const indexHtml = bundle["index.html"];
-      indexHtml.fileName = newFilename;
+      indexHtml.fileName = `resources/views/${newFilename}`;
     },
   };
 };
@@ -46,21 +46,14 @@ export default defineConfig({
     outDir: '../../',
     rollupOptions: {
       output: {
-        entryFileNames: `cms/assets/js/[name].js`,
-        chunkFileNames: `cms/assets/js/[name].js`,
+        entryFileNames: `public/cms/js/[name].js`,
+        chunkFileNames: `public/cms/js/[name].js`,
         assetFileNames: (assetInfo) => {
           const extType = assetInfo.name.split(".").at(1);
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            return `public/cms/assets/images/[name]-[hash][extname]`;
+            return `public/cms/images/[name]-[hash][extname]`;
           }
-          if (/js/i.test(extType)) {
-            return `public/cms/assets/js/[name]-[hash][extname]`;
-          }
-
-          if (/html/i.test(extType)) {
-            return `resources/views/[name]-[hash][extname]`;
-          }
-          return `public/cms/assets/${extType}[name]-[hash][extname]`;
+          return `public/cms/${extType}[name]-[hash][extname]`;
         },
         manualChunks: {
           lodash: ["lodash"],
