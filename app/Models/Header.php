@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Header extends Model
 {
     use HasFactory;
+
+
+    public function menus()
+    {
+        return $this->morphToMany(Menu::class, 'menuable');
+    }
 }
