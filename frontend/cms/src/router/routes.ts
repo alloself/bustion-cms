@@ -6,10 +6,9 @@ const getModuleRoutes = (key: string) => {
     meta: {
       module: key,
     },
-    alias: undefined as string | undefined,
     name: `${capitalize(key)}List`,
     component: () => import(`@/components/ModuleList.vue`),
-  };
+  } as Record<string, unknown>;
 
   if (key === import.meta.env.VITE_APP_DEFAULT_ALIAS) {
     rootList.alias = "";

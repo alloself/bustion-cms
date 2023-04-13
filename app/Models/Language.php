@@ -20,4 +20,11 @@ class Language extends Model
             'key' => ''
         ];
     }
+
+    protected static $baseRelations = [];
+
+    public static function getRelationsArray()
+    {
+        return self::$baseRelations;
+    }
 }

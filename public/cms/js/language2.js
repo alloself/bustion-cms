@@ -1,1 +1,0 @@
-import{c as e}from"./index.esm.js";import{a as t}from"./vue-codemirror.js";function p(o){return t([{component:"v-text-field",key:"key",props:{autocomplete:"key",label:"Ключ",name:"key",type:"text"},rule:e().required()},{component:"v-text-field",key:"title",props:{autocomplete:"title",label:"Название",name:"title",type:"text"},rule:e().required()}])}export{p as default};

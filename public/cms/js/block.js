@@ -1,1 +1,0 @@
-import{a as t}from"./vue-codemirror.js";const o="block",i="Блоки",c="mdi-toy-brick",s=t([{title:"Заголовок",key:"title"},{title:"Ссылка",key:"slug"}]);export{s as headers,c as icon,o as key,i as title};

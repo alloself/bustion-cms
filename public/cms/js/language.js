@@ -1,1 +1,0 @@
-import{a as t}from"./vue-codemirror.js";const o="language",a="Языки",i="mdi-translate",n=t([{title:"Заголовок",key:"title"},{title:"Ключ",key:"key"}]);export{n as headers,i as icon,o as key,a as title};
