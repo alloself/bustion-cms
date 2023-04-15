@@ -9,6 +9,8 @@ class Footer extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'template_id'];
+
 
     public function menus()
     {

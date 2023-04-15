@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('name');
 
             $table->uuid('template_id')->nullable();
-            $table->uuid('page_id')->nullable();
             $table->timestamps();
 
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
-            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
         });
     }
 

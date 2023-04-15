@@ -10,6 +10,9 @@ class Header extends Model
     use HasFactory;
 
 
+    protected $fillable = ['name', 'template_id'];
+
+
     public function menus()
     {
         return $this->morphToMany(Menu::class, 'menuable');

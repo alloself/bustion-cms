@@ -69,6 +69,30 @@ export default function (options?: {
     },
     {
       component: markRaw(RelationFieldAutocomplete),
+      key: "footer_id",
+      props: {
+        autocomplete: "footer_id",
+        label: "Подвал страницы",
+        name: "footer_id",
+        itemValue: "id",
+        itemTitle: "name",
+        module: "footer",
+      },
+    },
+    {
+      component: markRaw(RelationFieldAutocomplete),
+      key: "header_id",
+      props: {
+        autocomplete: "header_id",
+        label: "Шапка страницы",
+        name: "header_id",
+        itemValue: "id",
+        itemTitle: "name",
+        module: "header",
+      },
+    },
+    {
+      component: markRaw(RelationFieldAutocomplete),
       key: "template_id",
       props: {
         autocomplete: "template_id",
