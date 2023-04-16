@@ -18,7 +18,7 @@ class Page extends Model
         \Laravel\Scout\Searchable::usesSoftDelete insteadof \Kalnoy\Nestedset\NodeTrait;
     }
 
-    protected $fillable = ['title', 'meta', 'attributes', 'slug', 'parent_id', 'index', 'path', 'language_id', 'template_id', 'subtitle', 'show'];
+    protected $fillable = ['title', 'meta', 'attributes', 'slug', 'parent_id', 'index', 'path', 'language_id', 'template_id', 'subtitle', 'show', 'footer_id', 'header_id'];
 
     protected $casts = [
         'index' => 'boolean',
@@ -29,7 +29,9 @@ class Page extends Model
 
     protected static $baseRelations = [
         'blocks',
-        'children'
+        'children',
+        'header',
+        'footer'
     ];
 
     public static function getRelationsArray()
@@ -46,6 +48,17 @@ class Page extends Model
     {
         return $this->belongsTo(Template::class);
     }
+
+    public function header(): BelongsTo
+    {
+        return $this->belongsTo(Header::class);
+    }
+
+    public function footer(): BelongsTo
+    {
+        return $this->belongsTo(Footer::class);
+    }
+
 
     public function language(): BelongsTo
     {

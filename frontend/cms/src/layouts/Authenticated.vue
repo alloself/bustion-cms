@@ -4,12 +4,12 @@
       <v-list density="compact" nav>
         <v-list-item
           nav
-          v-for="appModule in Object.values(moduleStore.modules)"
-          :active="$route.fullPath.includes(appModule.key)"
-          :key="appModule.key"
-          :prepend-icon="appModule.icon"
-          :title="appModule.title"
-          :to="`/${appModule.key}`"
+          v-for="item in appModules"
+          :active="$route.fullPath.includes(item.key)"
+          :key="item.key"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :to="`/${item.key}`"
         ></v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -109,6 +109,11 @@ const toggleTheme = () => {
 };
 
 const routerKey = computed(() => route.fullPath);
+
+
+const appModules = computed(() => {
+  return Object.values(moduleStore.modules).filter((item) => item.list)
+})
 
 provide("rightDrawer", rightDrawer);
 </script>

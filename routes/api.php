@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\BlockController;
+use App\Http\Controllers\FooterController;
+use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TemplateController;
@@ -27,11 +29,15 @@ Route::prefix('cms')->group(function () {
         Route::apiResource('template', TemplateController::class);
         Route::apiResource('block', BlockController::class);
         Route::apiResource('language', LanguageController::class);
+        Route::apiResource('header', HeaderController::class);
+        Route::apiResource('footer', FooterController::class);
         Route::prefix('destroy')->group(function () {
             Route::post('page', [PageController::class, 'deleteMany']);
             Route::post('template', [TemplateController::class, 'deleteMany']);
             Route::post('block', [BlockController::class, 'deleteMany']);
             Route::post('language', [LanguageController::class, 'deleteMany']);
+            Route::post('header', [HeaderController::class, 'deleteMany']);
+            Route::post('footer', [FooterController::class, 'deleteMany']);
         });
     });
 });

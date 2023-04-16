@@ -5,7 +5,13 @@
         {{ title }}
       </span>
     </template>
-    <v-data-table v-model="selected" show-select :headers="headers" :items="items" :loading="loading">
+    <v-data-table
+      v-model="selected"
+      show-select
+      :headers="headers"
+      :items="items"
+      :loading="loading"
+    >
       <template #bottom><div></div></template>
       <!--<template #item.value>{{ new Date() }}</template>-->
     </v-data-table>
@@ -83,7 +89,7 @@
 import { computed, inject, ref } from "vue";
 
 interface Props {
-  modelValue: Record<string, unknown>;
+  modelValue?: Record<string, unknown>;
   title?: string;
   icon?: string;
 }

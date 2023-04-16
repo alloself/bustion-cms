@@ -11,6 +11,7 @@ export interface IModule {
   key: string;
   title: string;
   headers?: Array<Record<string, unknown>>;
+  list?: boolean;
 }
 
 export const useModuleStore = defineStore("module", {

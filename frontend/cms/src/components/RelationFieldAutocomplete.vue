@@ -105,11 +105,8 @@ onMounted(() => {
 
 watch(
   () => search.value,
-  (value: string) => {
+  () => {
     getItems();
-  },
-  {
-    immediate: true,
   }
 );
 
