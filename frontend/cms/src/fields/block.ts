@@ -4,6 +4,7 @@ import * as yup from "yup";
 import WYSIWYGEditor from "@/components/WYSIWYGEditor.vue";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
 import RelationsTable from "@/components/RelationsTable.vue";
+import EntityFieldJSONEditor from "@/components/EntityFieldJSONEditor.vue";
 
 export default function (options?: {
   entity?: Record<string, unknown>;
@@ -78,7 +79,13 @@ export default function (options?: {
         module: "template",
       },
     },
-
+    {
+      component: markRaw(EntityFieldJSONEditor),
+      key: "attributes",
+      props: {
+        title: "Атрибуты",
+      },
+    },
     {
       component: markRaw(WYSIWYGEditor),
       key: "content",

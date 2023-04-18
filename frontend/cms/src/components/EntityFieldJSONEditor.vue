@@ -64,7 +64,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn variant="text"> Отмена </v-btn>
+            <v-btn variant="text" @click="showCreate = false"> Отмена </v-btn>
             <v-btn color="primary" variant="text" @click="addNewProperty">
               Добавить
             </v-btn>

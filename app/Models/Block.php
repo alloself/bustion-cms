@@ -9,10 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Kalnoy\Nestedset\NodeTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Laravel\Scout\Searchable;
 
 class Block extends Model
 {
-    use HasFactory, NodeTrait, HasUuids, HasSlug;
+    use HasFactory, NodeTrait, HasUuids, HasSlug, Searchable {
+        \Laravel\Scout\Searchable::usesSoftDelete insteadof \Kalnoy\Nestedset\NodeTrait;
+    }
+
 
     protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show', 'parent_id'];
 
@@ -21,6 +25,17 @@ class Block extends Model
         'page',
         'children'
     ];
+
+
+    public function toSearchableArray()
+    {
+        return [
+            'name' => '',
+            'title' => '',
+            'subtitle' => '',
+            'content' => '',
+        ];
+    }
 
     public static function getRelationsArray()
     {
