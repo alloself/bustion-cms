@@ -27,6 +27,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Page::observe(PageObserver::class);
-        Model::preventLazyLoading();
+        Model::preventLazyLoading(false);
     }
 }

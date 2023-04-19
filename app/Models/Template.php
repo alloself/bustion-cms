@@ -13,13 +13,7 @@ class Template extends Model
 
     protected $fillable = ['name', 'value'];
 
-    protected static $baseRelations = [];
-
-    public static function getRelationsArray()
-    {
-        return self::$baseRelations;
-    }
-
+    protected $with = [];
 
     public function toSearchableArray()
     {

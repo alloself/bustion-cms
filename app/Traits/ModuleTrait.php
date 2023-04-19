@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -53,7 +54,7 @@ trait ModuleTrait
      */
     public function show($id)
     {
-        $model = $this->model()::with($this->model()::getRelationsArray())->findOrFail($id);
+        $model = $this->model()::findOrFail($id);
 
         return $model;
     }
@@ -78,6 +79,7 @@ trait ModuleTrait
     public function update(Request $request, $id)
     {
         $model = $this->model()::findOrFail($id);
+
         $model->update($request->all());
 
         return $model;

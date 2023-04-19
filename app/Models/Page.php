@@ -27,17 +27,12 @@ class Page extends Model
         'attributes' => 'array'
     ];
 
-    protected static $baseRelations = [
+    protected $with = [
         'blocks',
         'children',
         'header',
         'footer'
     ];
-
-    public static function getRelationsArray()
-    {
-        return self::$baseRelations;
-    }
 
     public function blocks(): HasMany
     {

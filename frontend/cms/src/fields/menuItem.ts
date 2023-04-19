@@ -1,6 +1,7 @@
 import { IFormField } from "./index";
 import { ref, Ref, markRaw } from "vue";
 import * as yup from "yup";
+import RelationsTable from "@/components/RelationsTable.vue";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
 
 export default function (options?: {
@@ -10,28 +11,41 @@ export default function (options?: {
   const fields = ref<IFormField[]>([
     {
       component: "v-text-field",
-      key: "name",
+      key: "title",
       props: {
-        autocomplete: "name",
-        label: "Название",
-        name: "name",
+        autocomplete: "title",
+        label: "Заголовок",
+        name: "title",
         type: "text",
       },
       rule: yup.string().required(),
     },
     {
-      component: markRaw(RelationFieldAutocomplete),
-      key: "template_id",
+      component: "v-text-field",
+      key: "link",
       props: {
-        autocomplete: "template_id",
-        label: "Шаблон",
-        name: "template_id",
-        itemValue: "id",
-        itemTitle: "name",
-        module: "template",
+        autocomplete: "link",
+        label: "Ссылка",
+        name: "link",
+        type: "text",
       },
+      rule: yup.string().required(),
     },
-    {
+  ]);
+
+  if (options?.entity?.id) {
+    fields.value.push({
+      component: markRaw(RelationsTable),
+      key: "menuItems",
+      props: {
+        predefinedValues: { parent_id: options.entity.id },
+        module: "menu-item",
+      },
+    });
+  }
+
+  if (options?.predefinedValues?.menu_id) {
+    fields.value.push({
       component: markRaw(RelationFieldAutocomplete),
       key: "menu_id",
       props: {
@@ -41,9 +55,10 @@ export default function (options?: {
         itemValue: "id",
         itemTitle: "name",
         module: "menu",
+        readonly: Boolean(options?.predefinedValues?.menu_id),
       },
-    },
-  ]);
+    });
+  }
 
   return fields;
 }

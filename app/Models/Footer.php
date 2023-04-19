@@ -6,19 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Footer extends Model
 {
     use HasFactory, Searchable, HasUuids;
 
-    protected $fillable = ['name', 'template_id'];
+    protected $fillable = ['name', 'template_id', 'menu_id'];
 
-    protected static $baseRelations = [];
-
-    public static function getRelationsArray()
-    {
-        return self::$baseRelations;
-    }
+    protected $with = ['menu'];
 
     public function toSearchableArray()
     {
@@ -27,8 +23,13 @@ class Footer extends Model
         ];
     }
 
-    public function menus()
+    public function menu(): BelongsTo
     {
-        return $this->morphToMany(Menu::class, 'menuable');
+        return $this->belongsTo(Menu::class);
+    }
+
+    public function template(): BelongsTo
+    {
+        return $this->belongsTo(Template::class);
     }
 }

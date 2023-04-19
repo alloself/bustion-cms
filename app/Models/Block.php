@@ -20,7 +20,7 @@ class Block extends Model
 
     protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show', 'parent_id'];
 
-    protected static $baseRelations = [
+    protected $with = [
         'template',
         'page',
         'children'
@@ -35,11 +35,6 @@ class Block extends Model
             'subtitle' => '',
             'content' => '',
         ];
-    }
-
-    public static function getRelationsArray()
-    {
-        return self::$baseRelations;
     }
 
     public function getSlugOptions(): SlugOptions
