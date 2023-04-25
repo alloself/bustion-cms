@@ -32,6 +32,12 @@ class PageController extends Controller
             $query->where('key', App::getLocale());
         })->with('blocks.descendants')->first();
 
+        dump($path);
+
+        if (!$page && $path !== '/404') {
+            return redirect(App::getLocale() . '/404');
+        }
+
         $page->blocks->map(function ($item, $key) {
             $item->setRelation('children', $item->descendants->toTree($item->id));
         });
