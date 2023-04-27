@@ -1,0 +1,15 @@
+.bs-main-slider {
+	@apply absolute inset-0 z-30;
+
+	.swiper {
+		@apply absolute inset-0;
+
+		&-slide {
+			&-content {
+				width: 820px;
+				max-width: 100%;
+				@apply mx-16 leading-none md:mx-24 lg:mx-auto;
+			}
+		}
+	}
+}

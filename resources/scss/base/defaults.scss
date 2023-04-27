@@ -1,0 +1,27 @@
+body {
+	font: 300 16px Montserrat, Arial, sans-serif;
+	letter-spacing: 0.05em;
+
+	&.is-touch {
+		.hide-touch,
+		.hide-mobile {
+			display: none !important;
+		}
+	}
+
+	&.modal-open {
+		overflow: hidden;
+
+		#app > *:not(.bs-modal) {
+			filter: blur(10px);
+		}
+	}
+}
+
+.bs-centered {
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 20px;
+	padding-right: 20px;
+}

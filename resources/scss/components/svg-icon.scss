@@ -1,0 +1,19 @@
+.bs-svg-icon {
+	display: inline-flex;
+	width: 30px;
+	height: 30px;
+	fill: currentColor;
+	color: inherit;
+
+	svg {
+		display: block;
+		width: inherit;
+		height: inherit;
+		fill: inherit;
+	}
+
+	&--filled {
+		fill: none;
+		stroke: none;
+	}
+}

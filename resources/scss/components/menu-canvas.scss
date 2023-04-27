@@ -1,0 +1,52 @@
+.bs-menu-canvas {
+	@apply fixed inset-0 bg-black z-100 overflow-y-auto p-10 md:p-12 xl:px-20 text-white pointer-events-none;
+	transition: all 0.4s ease-in-out;
+	transform: translate3d(0, 120%, 0);
+
+	&.is-open {
+		transform: translate3d(0, 0, 0);
+		pointer-events: auto;
+	}
+
+	&__close {
+		@apply cursor-pointer absolute right-10 top-10;
+
+		@screen md {
+			@apply right-12 top-12;
+		}
+
+		@screen xl {
+			right: 70px;
+		}
+	}
+
+	&__body {
+	}
+
+	&__list {
+		@apply p-0 m-0 list-none;
+
+		li {
+			a {
+				@apply text-white inline-block align-top no-underline relative font-semibold text-20px md:text-36px xl:text-56px;
+				transition: all 0.3s;
+				white-space: nowrap;
+
+				&:before {
+					content: attr(data-text);
+					@apply text-main absolute inset-0 w-0 overflow-hidden;
+					text-shadow: 0 0 1px theme('colors.main');
+					transition: width 0.3s ease-out;
+				}
+
+				&:hover {
+					@apply text-white no-underline;
+
+					&:before {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}

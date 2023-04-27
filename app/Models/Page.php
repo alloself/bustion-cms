@@ -31,7 +31,10 @@ class Page extends Model
         'blocks',
         'children',
         'header',
-        'footer'
+        'footer',
+        'language',
+        'header',
+        'template'
     ];
 
     public function blocks(): HasMany

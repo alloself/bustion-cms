@@ -1,0 +1,9 @@
+.bs-header {
+	@apply flex justify-between items-center overflow-hidden absolute inset-x-0 top-0 z-40 p-5 pb-0 md:p-11 md:pb-0 xl:p-[75px] xl:pb-0;
+	transition: all 0.3s;
+
+	&--sticky {
+		@apply fixed z-60 bg-black inset-x-0 top-0 py-3 px-5 shadow-xl;
+		background-color: theme('colors.black');
+	}
+}

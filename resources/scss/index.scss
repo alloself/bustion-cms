@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// libx
+//@import 'swiper/css';
+//@import 'animate.css';
+
+// defaults
+@import './base/animations.scss';
+@import './base/defaults.scss';
+
+// components
+@import './components/svg-icon.scss';
+@import './components/logo.scss';
+@import './components/header.scss';
+@import './components/footer.scss';
+@import './components/bg-block.scss';
+@import './components/menu-trigger.scss';
+@import './components/menu-canvas.scss';
+@import './components/post.scss';
+@import './components/fixed-link.scss';
+@import './components/project-slider.scss';
+@import './components/main-slider.scss';
+@import './components/vertical-slider.scss';
+@import './components/forms.scss';
+@import './components/button.scss';
+
+

@@ -15,6 +15,10 @@ const headers = ref([
     title: "Ссылка",
     key: "slug",
   },
+  {
+    title: "Язык",
+    key: "language.title",
+  },
 ]);
 
 const list = true;

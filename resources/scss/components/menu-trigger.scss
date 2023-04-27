@@ -1,0 +1,26 @@
+.bs-menu-trigger {
+	font-size: 11px;
+	@apply flex items-center text-white uppercase;
+
+	&__text {
+		@apply hidden md:block;
+	}
+
+	&__icon {
+		@apply ml-5 cursor-pointer flex-none;
+		width: 33px;
+		height: 33px;
+		background: url(@public/public/menu.svg);
+		background-size: 100% 100%;
+		transition: all 0.3s;
+
+		@screen md {
+			width: 48px;
+			height: 48px;
+		}
+
+		&:hover {
+			transform: scale(1.2);
+		}
+	}
+}
