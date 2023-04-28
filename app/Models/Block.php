@@ -22,7 +22,6 @@ class Block extends Model
 
     protected $with = [
         'template',
-        'page',
         'children'
     ];
 

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 
 class PageController extends Controller
@@ -44,26 +45,45 @@ class PageController extends Controller
 
         $header = $page->header && $page->header->template ?  Blade::render($page->header->template->value, [], true) : '';
 
-        return Blade::render(
+        $footer = $page->footer && $page->footer->template ?  Blade::render($page->footer->template->value, [], true) : '';
+
+        $blocks = $this->renderTree($page->blocks ?? []);
+
+
+        $template = Blade::render(
             $page->template->value,
             [
                 'page' => $page,
                 'header' => $header,
-                'footer' => ''
+                'blocks' => $blocks,
+                'footer' => $footer
             ],
             true
         );
+
+        return $template;
     }
 
-    public function renderTree(array $array = [])
+    public function renderTree(Collection $array)
     {
         $tree = [];
 
         foreach ($array as $key => $value) {
-            array_push($tree, Blade::render($value->template->value));
-            if (count($value->template->children)) {
-                $this->renderTree($value->template->children);
+
+
+            if (count($value->children)) {
+                $value->children = $this->renderTree($value->children);
             }
+
+            array_push($tree, Blade::render(
+                $value->template->value,
+                [
+                    'block' => $value,
+                ],
+                true
+            ));
         }
+
+        return $tree;
     }
 }
