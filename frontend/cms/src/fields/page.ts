@@ -137,6 +137,7 @@ export default function (options?: {
       key: "blocks",
       props: {
         predefinedValues: { page_id: options.entity.id },
+        relationKey: "page_id",
         module: "block",
       },
     });
@@ -145,6 +146,7 @@ export default function (options?: {
       key: "children",
       props: {
         predefinedValues: { parent_id: options.entity.id },
+        relationKey: "parent_id",
         module: "page",
       },
     });

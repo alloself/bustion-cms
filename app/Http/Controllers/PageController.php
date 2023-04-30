@@ -29,7 +29,7 @@ class PageController extends Controller
 
     public function web(Request $request)
     {
-        $path = array_key_exists('path', $request->route()->parameters) ? $request->route()->parameters['path'] : '/';
+        $path = array_key_exists('path', $request->route()->parameters) ? '/' . $request->route()->parameters['path'] : '/';
         $page = Page::wherePath($path)->whereHas('language', function (Builder $query) {
             $query->where('key', App::getLocale());
         })->with('blocks.descendants')->first();
@@ -38,14 +38,22 @@ class PageController extends Controller
             return redirect(App::getLocale() . '/404');
         }*/
 
+        if (!count($page->blocks)) {
+            $page->blocks = new Collection();
+        } else {
 
-        $page->blocks->map(function ($item, $key) {
-            $item->setRelation('children', $item->descendants->toTree($item->id));
-        });
+            $page->blocks->map(function ($item, $key) {
+                $item->setRelation('children', $item->descendants->toTree($item->id));
+            });
+        }
 
-        $header = $page->header && $page->header->template ?  Blade::render($page->header->template->value, [], true) : '';
+        $header = $page->header && $page->header->template ?  Blade::render($page->header->template->value, [
+            'page' => $page
+        ], true) : '';
 
-        $footer = $page->footer && $page->footer->template ?  Blade::render($page->footer->template->value, [], true) : '';
+        $footer = $page->footer && $page->footer->template ?  Blade::render($page->footer->template->value, [
+            'page' => $page
+        ], true) : '';
 
         $blocks = $this->renderTree($page->blocks ?? []);
 

@@ -19,6 +19,7 @@
     </v-data-table>
     <teleport to="#rightDrawer" v-if="showBlockModal">
       <module-detail
+
         :module="props.module"
         modal
         :id="selectedRow"
@@ -47,7 +48,14 @@
       </v-tooltip>
       <v-tooltip location="top" text="Удалить выбранное" color="primary">
         <template #activator="{ props }">
-          <v-btn icon large :loading="loading" v-bind="props" flat>
+          <v-btn
+            icon
+            large
+            :loading="loading"
+            v-bind="props"
+            flat
+            @click="removeRelations"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </template>
@@ -59,23 +67,26 @@
 </template>
 
 <script lang="ts" setup>
+import { client } from "@/plugins/axios";
 import { useModuleStore } from "@/stores/module";
-import { ref, computed, inject, defineAsyncComponent, onBeforeUnmount } from "vue";
-import { useRouter } from "vue-router";
+import {
+  ref,
+  computed,
+  inject,
+  defineAsyncComponent,
+  onBeforeUnmount,
+} from "vue";
 
 const ModuleDetail = defineAsyncComponent(
   () => import("@/components/ModuleDetail.vue")
-);
-const RelationFieldAutocomplete = defineAsyncComponent(
-  () => import("@/components/RelationFieldAutocomplete.vue")
 );
 
 interface Props {
   modelValue: Record<string, unknown>[];
   module: string;
+  relationKey: string;
 }
 
-const router = useRouter();
 const moduleStore = useModuleStore();
 
 const loading = inject("loading", ref(false));
@@ -90,7 +101,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits(["update:model-value"]);
 
-const selected = ref([]);
+const selected = ref<string[]>([]);
 const items = computed({
   get: () => props.modelValue,
   set: (newValue) => emits("update:model-value", newValue),
@@ -119,6 +130,9 @@ const onSearchInput = (entitiy: Record<string, string>) => {
 const onModalCreate = (entitiy: Record<string, string>) => {
   emits("update:model-value", [...props.modelValue, entitiy]);
   showBlockModal.value = false;
+  if (document.getElementById("rightDrawer")?.childNodes.length === 2) {
+    rightDrawer.value = false;
+  }
 };
 
 const onUpdateModalValue = (value: Record<string, unknown> | string) => {
@@ -126,17 +140,30 @@ const onUpdateModalValue = (value: Record<string, unknown> | string) => {
 };
 
 const onModalClose = () => {
+  selectedRow.value = null;
   showBlockModal.value = false;
+  console.log(document.getElementById("rightDrawer")?.childNodes.length)
   if (document.getElementById("rightDrawer")?.childNodes.length === 2) {
     rightDrawer.value = false;
   }
 };
 
+const removeRelations = () => {
+  selected.value.forEach(async (item) => {
+    await client.patch(`/api/cms/${module.value.key}/${item}`, {
+      [props.relationKey]: null,
+    });
+
+    emits(
+      "update:model-value",
+      props.modelValue.filter((item) => !selected.value.includes(item.id))
+    );
+  });
+};
 
 onBeforeUnmount(() => {
-  onModalClose()
-})
-
+  onModalClose();
+});
 </script>
 <style lang="scss">
 .v-data-table__tr {
