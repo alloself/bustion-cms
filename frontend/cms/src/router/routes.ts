@@ -37,7 +37,12 @@ const getModuleRoutes = (key: string) => {
 
 const children = import.meta.env.VITE_APP_MODULES.split(",").flatMap(
   (key: string) => {
-    return getModuleRoutes(key);
+    const kebabize = (str: string) =>
+      str.replace(
+        /[A-Z]+(?![a-z])|[A-Z]/g,
+        ($, ofs) => (ofs ? "-" : "") + $.toLowerCase()
+      );
+    return getModuleRoutes(kebabize(key));
   }
 );
 

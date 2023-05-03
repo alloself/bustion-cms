@@ -31,6 +31,18 @@ export default function (options?: {
         module: "template",
       },
     },
+    {
+      component: markRaw(RelationFieldAutocomplete),
+      key: "menu_id",
+      props: {
+        autocomplete: "menu_id",
+        label: "Меню",
+        name: "menu_id",
+        itemValue: "id",
+        itemTitle: "name",
+        module: "menu",
+      },
+    },
   ]);
 
   return fields;

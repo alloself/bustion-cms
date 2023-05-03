@@ -7,7 +7,7 @@
     :item-value="itemValue"
     :clearable="!$attrs.readonly"
     @click:prepend="addRelationEntity"
-    @click:prependInner="addRelationEntity"
+    @click:prependInner="editRelationEntity"
     :prepend-icon="$attrs.readonly ? '' : 'mdi-plus'"
     :prepend-inner-icon="modelValue && !$attrs.readonly ? 'mdi-pencil' : ''"
     :loading="$attrs.loading as boolean || loading"
@@ -17,8 +17,9 @@
   </v-autocomplete>
   <teleport to="#rightDrawer" v-if="entityModal">
     <module-detail
+      :key="`${props.module}-${modalId}`"
       :module="module.key"
-      :id="modelValue"
+      :id="modalId"
       modal
       class="relation-modal"
       @on-close="onModalClose"
@@ -57,6 +58,7 @@ const search = ref("");
 const items = ref<Record<string, unknown>[]>([]);
 const loading = ref(false);
 const entityModal = ref(false);
+const modalId = ref();
 
 const getItems = async (options: any = {}) => {
   loading.value = true;
@@ -78,6 +80,13 @@ const getItems = async (options: any = {}) => {
 const addRelationEntity = () => {
   entityModal.value = true;
   rightDrawer.value = true;
+  modalId.value = null;
+};
+
+const editRelationEntity = () => {
+  entityModal.value = true;
+  rightDrawer.value = true;
+  modalId.value = props.modelValue;
 };
 
 const onModalCreate = (entitiy: Record<string, string>) => {
@@ -92,6 +101,7 @@ const onUpdateModalValue = (value: Record<string, unknown> | string) => {
 
 const onModalClose = () => {
   entityModal.value = false;
+  modalId.value = null;
   if (document.getElementById("rightDrawer")?.childNodes.length === 2) {
     rightDrawer.value = false;
   }

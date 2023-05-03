@@ -30,11 +30,11 @@ class Page extends Model
     protected $with = [
         'blocks',
         'children',
-        'header',
+        'header.menu.items',
         'footer',
         'language',
         'header',
-        'template'
+        'template',
     ];
 
     public function blocks(): HasMany

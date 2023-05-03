@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BlockController;
+use App\Http\Controllers\DataObjectController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\LanguageController;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('cms')->group(function () {
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum', 'api'])->group(function () {
         Route::get('/user', function (Request $request) {
             return $request->user();
         });
@@ -35,6 +36,7 @@ Route::prefix('cms')->group(function () {
         Route::apiResource('footer', FooterController::class);
         Route::apiResource('menu', MenuController::class);
         Route::apiResource('menu-item', MenuItemController::class);
+        Route::apiResource('data-object', DataObjectController::class);
         Route::prefix('destroy')->group(function () {
             Route::post('page', [PageController::class, 'deleteMany']);
             Route::post('template', [TemplateController::class, 'deleteMany']);
@@ -44,6 +46,7 @@ Route::prefix('cms')->group(function () {
             Route::post('footer', [FooterController::class, 'deleteMany']);
             Route::post('menu', [MenuController::class, 'deleteMany']);
             Route::post('menu-item', [MenuItemController::class, 'deleteMany']);
+            Route::post('data-object', [DataObjectController::class, 'deleteMany']);
         });
     });
 });

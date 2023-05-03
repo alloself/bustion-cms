@@ -1,12 +1,23 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js';
-import { toggleModalVisibility } from './modal.js'
+import { toggleModalVisibility, modalVisibility } from './modal.js'
 import 'aos/dist/aos.css'
 import * as AOS from 'aos'
 import { initBGBlock, initHeader, initMainSlider, initMenu, initProjectSlider } from './utils.js'
 
 const app = createApp({
     methods: {
-        toggleModalVisibility
+        toggleModalVisibility,
+        clickHandler(event) {
+            if (event.target.hasAttribute('data-bs-modal')) {
+                toggleModalVisibility()
+            }
+        }
+    },
+    setup() {
+
+        return {
+            modalVisibility
+        }
     }
 });
 

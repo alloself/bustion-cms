@@ -107,17 +107,20 @@ function initProjectSlider() {
 }
 function initVerticalSlider() {
   const $swiperTriggers = document.querySelectorAll(".js-vertical-slider");
-  $swiperTriggers.forEach(($trigger) => {
-    const swiper = new Swiper($trigger, {
+  $swiperTriggers.forEach(($swiperElement) => {
+    const swiper = new Swiper($swiperElement, {
       direction: "vertical",
       slidesPerView: "auto",
       simulateTouch: false,
       autoHeight: true,
       centeredSlides: true,
       speed: 700,
-      spaceBetween: 50
+      spaceBetween: 0
     });
-    $trigger.addEventListener("mousewheel", function(event) {
+    $swiperElement.addEventListener("mousewheel", function(event) {
+      if (!event.target.closest(".js-vertical-slider-item") && !event.target.classList.contains(".js-vertical-slider-item")) {
+        return;
+      }
       let delta;
       if (event.wheelDelta) {
         delta = event.wheelDelta;
@@ -159,7 +162,9 @@ function initMainSlider() {
     speed: 700,
     spaceBetween: 0,
     slidesPerView: 1,
-    hashNavigation: true,
+    hashNavigation: {
+      watchState: true
+    },
     mousewheel: {
       invert: false
     },
@@ -178,7 +183,12 @@ function initMainSlider() {
 }
 const app = createApp({
   methods: {
-    toggleModalVisibility
+    toggleModalVisibility,
+    clickHandler(event) {
+      if (event.target.hasAttribute("data-bs-modal")) {
+        toggleModalVisibility();
+      }
+    }
   }
 });
 app.mount("#app");

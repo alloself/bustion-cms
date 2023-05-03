@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('link')->nullable();
             $table->uuid('menu_id')->nullable();
+            $table->json('attributes')->nullable();
             $table->unsignedInteger('_lft')->default(0);
             $table->unsignedInteger('_rgt')->default(0);
             $table->uuid('parent_id')->nullable();

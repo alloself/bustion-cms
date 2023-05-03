@@ -19,7 +19,7 @@
     </v-data-table>
     <teleport to="#rightDrawer" v-if="showBlockModal">
       <module-detail
-
+        :key="`${props.module}-${selectedRow}`"
         :module="props.module"
         modal
         :id="selectedRow"

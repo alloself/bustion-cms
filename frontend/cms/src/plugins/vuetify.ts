@@ -3,7 +3,7 @@ import "vuetify/styles";
 
 import { ThemeDefinition, createVuetify } from "vuetify";
 import { VDataTable } from "vuetify/labs/components";
-import { VTextField, VCheckbox } from "vuetify/components";
+import { VTextField, VCheckbox, VFileInput } from "vuetify/components";
 
 export const defaultDarkTheme: ThemeDefinition = {
   dark: true,
@@ -20,8 +20,11 @@ export default createVuetify({
     VAutocomplete: {
       variant: "outlined",
     },
+    VFileInput: {
+      variant: "outlined",
+    },
   },
-  components: { VDataTable, VTextField, VCheckbox },
+  components: { VDataTable, VTextField, VCheckbox, VFileInput },
   theme: {
     defaultTheme: "defaultDarkTheme",
     themes: {

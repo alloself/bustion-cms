@@ -19,7 +19,7 @@ export const useUserStore = defineStore("user", {
         const { data } = await client.get("/api/cms/user");
         this.user = data;
       } catch (e: any) {
-        return Promise.reject(e);
+        return e;
       }
     },
     async logout() {

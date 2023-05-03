@@ -55,7 +55,7 @@ class PageController extends Controller
             'page' => $page
         ], true) : '';
 
-        $blocks = $this->renderTree($page->blocks ?? []);
+        $blocks = $this->renderTree($page->blocks ?? [], ['header' => $header, 'page' => $page]);
 
 
         $template = Blade::render(
@@ -72,7 +72,7 @@ class PageController extends Controller
         return $template;
     }
 
-    public function renderTree(Collection $array)
+    public function renderTree(Collection $array, $globalVariables = [])
     {
         $tree = [];
 
@@ -87,6 +87,7 @@ class PageController extends Controller
                 $value->template->value,
                 [
                     'block' => $value,
+                    ...$globalVariables
                 ],
                 true
             ));

@@ -24,13 +24,14 @@ export default function (options?: {
   if (options?.entity?.id) {
     fields.value.push({
       component: markRaw(RelationsTable),
-      key: "menu_items",
+      key: "items",
       props: {
         predefinedValues: { menu_id: options.entity.id },
         module: "menu-item",
       },
     });
   }
+
 
   return fields;
 }

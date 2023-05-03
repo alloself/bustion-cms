@@ -11,10 +11,6 @@ body {
 
 	&.modal-open {
 		overflow: hidden;
-
-		#app > *:not(.bs-modal) {
-			filter: blur(10px);
-		}
 	}
 }
 

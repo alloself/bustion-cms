@@ -43,6 +43,8 @@ trait ModuleTrait
     {
         $model = $this->model()::create($request->all());
 
+
+
         return $model;
     }
 

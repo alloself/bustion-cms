@@ -15,7 +15,7 @@ class Menu extends Model
     protected $fillable = ['name'];
 
     protected $with = [
-        'menuItems',
+        'items',
     ];
 
     public function toSearchableArray()
@@ -25,7 +25,7 @@ class Menu extends Model
         ];
     }
 
-    public function menuItems(): HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(MenuItem::class);
     }

@@ -41,8 +41,9 @@ import { router } from "@/router";
 import { useModuleStore } from "@/stores/module";
 import { capitalize, getChangedFormFields, getModuleKeyByRoute } from "@/utils";
 import { FormContext } from "vee-validate";
-import { computed, defineAsyncComponent, onMounted, onUnmounted, provide, ref } from "vue";
+import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
 import { useRoute } from "vue-router";
+import { toFormData } from "axios";
 const SmartForm = defineAsyncComponent(
   () => import("@/components/SmartForm.vue")
 );
@@ -93,7 +94,7 @@ const onCreate = async () => {
     try {
       const { data } = await client.post(
         `/api/cms/${module.value.key}`,
-        form.value?.values
+        toFormData(form.value?.values as object)
       );
 
       if (props.modal) {
@@ -122,7 +123,9 @@ const onUpdate = async () => {
     try {
       const { data } = await client.patch(
         `/api/cms/${module.value.key}/${modelId.value}`,
-        getChangedFormFields(initalValues.value, form.value?.values)
+        toFormData(
+          getChangedFormFields(initalValues.value, form.value?.values) as object
+        )
       );
 
       fields.value = module.value.getFields({
