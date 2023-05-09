@@ -189,6 +189,11 @@ const app = createApp({
         toggleModalVisibility();
       }
     }
+  },
+  setup() {
+    return {
+      modalVisibility
+    };
   }
 });
 app.mount("#app");

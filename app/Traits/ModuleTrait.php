@@ -2,9 +2,8 @@
 
 namespace App\Traits;
 
-use App\Models\Menu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+
 
 trait ModuleTrait
 {
@@ -80,7 +79,10 @@ trait ModuleTrait
      */
     public function update(Request $request, $id)
     {
+
         $model = $this->model()::findOrFail($id);
+
+
 
         $model->update($request->all());
 

@@ -12,12 +12,16 @@ export const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    if (config.url?.includes("api")) {
+    if (
+      config.url?.includes("api") &&
+      config.method !== "get" &&
+      config.method !== "delete"
+    ) {
       config.headers.Accept = "multipart/form-data";
     } else {
       config.headers.Accept = "application/json";
     }
-    console.log(config)
+    console.log(config);
     return config;
   },
   (error) => {}

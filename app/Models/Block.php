@@ -10,10 +10,12 @@ use Kalnoy\Nestedset\NodeTrait;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Block extends Model
+class Block extends Model implements HasMedia
 {
-    use HasFactory, NodeTrait, HasUuids, HasSlug, Searchable {
+    use InteractsWithMedia, HasFactory, NodeTrait, HasUuids, HasSlug, Searchable {
         \Laravel\Scout\Searchable::usesSoftDelete insteadof \Kalnoy\Nestedset\NodeTrait;
     }
 

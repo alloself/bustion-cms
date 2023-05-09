@@ -32,7 +32,7 @@
       </v-tooltip>
       <v-tooltip location="top" text="Удалить выбранное" color="primary">
         <template #activator="{ props }">
-          <v-btn icon large :loading="loading" v-bind="props" flat>
+          <v-btn icon large :loading="loading" v-bind="props" flat :disabled="!selected.length">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </template>

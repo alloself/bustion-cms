@@ -39,6 +39,8 @@ export default function (options?: {
       props: {
         autocomplete: "path",
         label: "Ссылка",
+        //@ts-ignore
+        prefix: `/${options?.entity?.language?.key}` || "",
         messages:
           "Генерируется автоматически при создании и изменении заголовка страницы,можно обновить вручную.",
         name: "path",

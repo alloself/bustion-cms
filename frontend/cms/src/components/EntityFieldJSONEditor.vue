@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="tonal" flat :loading="loading" :prepend-icon="icon">
+  <v-card variant="tonal" flat :loading="loading" :prepend-icon="icon" class="mb-8">
     <template #title>
       <span class="ml-2">
         {{ title }}

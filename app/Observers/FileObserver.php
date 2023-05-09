@@ -54,6 +54,6 @@ class FileObserver
      */
     public function forceDeleted(File $file)
     {
-        //
+        Storage::delete($file->path);
     }
 }

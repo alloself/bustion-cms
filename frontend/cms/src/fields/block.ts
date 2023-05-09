@@ -68,6 +68,17 @@ export default function (options?: {
       rule: yup.string(),
     },
     {
+      component: "v-file-input",
+      key: "image",
+      props: {
+        autocomplete: "link",
+        label: "Изображение",
+        name: "image",
+        accept: "image/png, image/jpeg, image/webp",
+        clearable: true,
+      }
+    },
+    {
       component: markRaw(RelationFieldAutocomplete),
       key: "template_id",
       props: {

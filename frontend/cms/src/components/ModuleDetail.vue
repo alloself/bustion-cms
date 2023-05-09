@@ -121,11 +121,15 @@ const onUpdate = async () => {
   if (validateRezult?.valid) {
     loading.value = true;
     try {
-      const { data } = await client.patch(
+      const formData = toFormData(
+        getChangedFormFields(initalValues.value, form.value?.values) as object
+      );
+
+      formData.append("_method", "patch");
+
+      const { data } = await client.post(
         `/api/cms/${module.value.key}/${modelId.value}`,
-        toFormData(
-          getChangedFormFields(initalValues.value, form.value?.values) as object
-        )
+        formData
       );
 
       fields.value = module.value.getFields({

@@ -60,6 +60,11 @@ const routes = [
     name: "Login",
     component: () => import("@/pages/Login.vue"),
   },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "404",
+    redirect: "/",
+  },
 ];
 
 export { routes };

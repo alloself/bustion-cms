@@ -66,7 +66,6 @@ class PageController extends Controller
                 'blocks' => $blocks,
                 'footer' => $footer
             ],
-            true
         );
 
         return $template;
@@ -87,9 +86,9 @@ class PageController extends Controller
                 $value->template->value,
                 [
                     'block' => $value,
+                    'loop' => $key,
                     ...$globalVariables
                 ],
-                true
             ));
         }
 
