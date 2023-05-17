@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\DataObjectController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\LanguageController;
@@ -37,6 +38,7 @@ Route::prefix('cms')->group(function () {
         Route::apiResource('menu', MenuController::class);
         Route::apiResource('menu-item', MenuItemController::class);
         Route::apiResource('data-object', DataObjectController::class);
+        Route::apiResource('file', FileController::class);
         Route::prefix('destroy')->group(function () {
             Route::post('page', [PageController::class, 'deleteMany']);
             Route::post('template', [TemplateController::class, 'deleteMany']);
@@ -47,6 +49,7 @@ Route::prefix('cms')->group(function () {
             Route::post('menu', [MenuController::class, 'deleteMany']);
             Route::post('menu-item', [MenuItemController::class, 'deleteMany']);
             Route::post('data-object', [DataObjectController::class, 'deleteMany']);
+            Route::post('file', [FileController::class, 'deleteMany']);
         });
     });
 });

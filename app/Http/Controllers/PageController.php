@@ -27,6 +27,8 @@ class PageController extends Controller
         return view('pages.admin');
     }
 
+
+
     public function web(Request $request)
     {
         $path = array_key_exists('path', $request->route()->parameters) ? '/' . $request->route()->parameters['path'] : '/';
@@ -34,9 +36,9 @@ class PageController extends Controller
             $query->where('key', App::getLocale());
         })->with('blocks.descendants')->first();
 
-        /*if (!$page && $path !== '/404') {
+        if (!$page && $path !== '/404') {
             return redirect(App::getLocale() . '/404');
-        }*/
+        }
 
         if (!count($page->blocks)) {
             $page->blocks = new Collection();

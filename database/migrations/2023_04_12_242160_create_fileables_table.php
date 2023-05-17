@@ -14,11 +14,14 @@ class CreateFileablesTable extends Migration
     public function up()
     {
         Schema::create('fileables', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('file_id');
             $table->uuidMorphs('fileable');
             $table->enum('type', ['image', 'file']);
-            $table->string('value')->nullable();
+            $table->string('key')->nullable();
+            $table->bigInteger('order')->default(0);
             $table->timestamps();
+
+            $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade');
         });
     }
 

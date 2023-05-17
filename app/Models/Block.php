@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\FileCast;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,9 +25,10 @@ class Block extends Model implements HasMedia
 
     protected $with = [
         'template',
-        'children'
+        'children',
+        'images',
+        'files'
     ];
-
 
     public function toSearchableArray()
     {
@@ -53,5 +55,16 @@ class Block extends Model implements HasMedia
     public function template(): BelongsTo
     {
         return $this->belongsTo(Template::class);
+    }
+
+
+    public function files()
+    {
+        return $this->morphToMany(File::class, 'fileable')->wherePivot('type', 'file')->withPivot('key', 'order');
+    }
+
+    public function images()
+    {
+        return $this->morphToMany(File::class, 'fileable')->wherePivot('type', 'image')->withPivot('key', 'order');
     }
 }

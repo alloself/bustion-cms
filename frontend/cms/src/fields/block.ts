@@ -5,12 +5,13 @@ import WYSIWYGEditor from "@/components/WYSIWYGEditor.vue";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
 import RelationsTable from "@/components/RelationsTable.vue";
 import EntityFieldJSONEditor from "@/components/EntityFieldJSONEditor.vue";
+import FilesTable from "@/components/FilesTable.vue";
 
 export default function (options?: {
   entity?: Record<string, unknown>;
   predefinedValues?: Record<string, unknown>;
 }): Ref<IFormField[]> {
-  console.log(options);
+
   const fields = ref<IFormField[]>([
     {
       component: "v-text-field",
@@ -68,17 +69,6 @@ export default function (options?: {
       rule: yup.string(),
     },
     {
-      component: "v-file-input",
-      key: "image",
-      props: {
-        autocomplete: "link",
-        label: "Изображение",
-        name: "image",
-        accept: "image/png, image/jpeg, image/webp",
-        clearable: true,
-      }
-    },
-    {
       component: markRaw(RelationFieldAutocomplete),
       key: "template_id",
       props: {
@@ -109,7 +99,26 @@ export default function (options?: {
       key: "children",
       props: {
         predefinedValues: { parent_id: options.entity.id },
+        relationKey: "parent_id",
         module: "block",
+      },
+    });
+
+    fields.value.push({
+      component: markRaw(FilesTable),
+      key: "images",
+      props: {
+        title: "Изображения",
+        type: "image",
+      },
+    });
+
+    fields.value.push({
+      component: markRaw(FilesTable),
+      key: "files",
+      props: {
+        title: "Файлы",
+        type: "file",
       },
     });
   }

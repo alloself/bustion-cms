@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Log;
 
 trait ModuleTrait
 {
@@ -40,9 +40,40 @@ trait ModuleTrait
      */
     public function store(Request $request)
     {
-        $model = $this->model()::create($request->all());
+
+        $values = $request->all();
+
+        $model = $this->model()::create($values);
 
 
+        if ($request->has('images')) {
+            if (count($values['images']) === 0) {
+                $model->images()->sync([]);
+            } else {
+                foreach ($values['images'] as $key => $image) {
+                    $mapped[$image['id']] = ['key' => $image['pivot']['key'], 'type' => 'image'];
+                }
+                $model->images()->sync($mapped);
+            }
+        }
+
+        if ($request->has('files')) {
+            if (count($values['files']) === 0) {
+                $model->files()->sync([]);
+            } else {
+                foreach ($values['files'] as $key => $file) {
+                    $mapped[$file['id']] = ['key' => $file['pivot']['key'], 'type' => 'file'];
+                }
+                $model->files()->sync($mapped);
+            }
+        }
+
+        if ($model->images) {
+            $model->load('images');
+        }
+        if ($model->files) {
+            $model->load('files');
+        }
 
         return $model;
     }
@@ -80,11 +111,45 @@ trait ModuleTrait
     public function update(Request $request, $id)
     {
 
+
+
+        $values = $request->all();
+
+
         $model = $this->model()::findOrFail($id);
 
 
 
-        $model->update($request->all());
+        $model->update($values);
+
+        if ($request->has('images')) {
+            if (count($values['images']) === 0) {
+                $model->images()->sync([]);
+            } else {
+                foreach ($values['images'] as $key => $image) {
+                    $mapped[$image['id']] = ['key' => $image['pivot']['key'], 'type' => 'image'];
+                }
+                $model->images()->sync($mapped);
+            }
+        }
+
+        if ($request->has('files')) {
+            if (count($values['files']) === 0) {
+                $model->files()->sync([]);
+            } else {
+                foreach ($values['files'] as $key => $file) {
+                    $mapped[$file['id']] = ['key' => $file['pivot']['key'], 'type' => 'file'];
+                }
+                $model->files()->sync($mapped);
+            }
+        }
+
+        if ($model->images) {
+            $model->load('images');
+        }
+        if ($model->files) {
+            $model->load('files');
+        }
 
         return $model;
     }

@@ -16,14 +16,4 @@ class File extends Model
     {
         return url($value);
     }
-
-    public function files()
-    {
-        return $this->morphToMany(File::class, 'fileable')->wherePivot('type', 'file')->withPivot('value');
-    }
-
-    public function images()
-    {
-        return $this->morphToMany(File::class, 'fileable')->wherePivot('type', 'image')->withPivot('value');
-    }
 }

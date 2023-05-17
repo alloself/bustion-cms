@@ -3,77 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Traits\ModuleTrait;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    use ModuleTrait;
+
+    public function model()
     {
-        //
+        return File::class;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public static function store(Request $request)
     {
-        //
-    }
+        $originalFile = $request->file('file');
+        $name = $originalFile->getClientOriginalName();
+        $path = $originalFile->storeAs('public/files', uniqid() . "." . $originalFile->getClientOriginalExtension());
+        $file = File::create([
+            'path' => $path,
+            'name' => $name,
+            'extension' => $originalFile->getClientOriginalExtension(),
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show(File $file)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(File $file)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, File $file)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(File $file)
-    {
-        //
+        return $file;
     }
 }
