@@ -1,18 +1,14 @@
 <template>
-  <v-data-table
+  <v-data-table-server
     v-model="selected"
     show-select
     :headers="module.headers"
     :items="items"
-    :items-length="paginateItems?.total"
+    :items-length="paginateItems?.total || 0"
     :loading="loading"
     @update:options="getItems"
     @click:row="rowClick"
   >
-    <!--  <template #top>
-    <v-text-field></v-text-field>
-  </template>-->
-    <!-- eslint-disable-next-line vue/valid-v-slot-->
     <template #footer.prepend>
       <v-tooltip location="top" text="Создать" color="primary">
         <template #activator="{ props }">
@@ -40,7 +36,7 @@
       </v-tooltip>
       <v-spacer></v-spacer>
     </template>
-  </v-data-table>
+  </v-data-table-server>
 </template>
 
 <script lang="ts" setup>
@@ -62,6 +58,7 @@ const getItems = async (options: any) => {
   try {
     const { data } = await client.get(`/api/cms/${module.value.key}`, {
       params: {
+        page:options.page,
         per_page: options.itemsPerPage,
         paginate: true,
       },

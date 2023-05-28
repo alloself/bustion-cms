@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Block;
 use App\Models\Page;
 use App\Traits\ModuleTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 

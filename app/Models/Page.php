@@ -11,6 +11,8 @@ use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 
 class Page extends Model
 {
@@ -98,5 +100,29 @@ class Page extends Model
         }
 
         return $this;
+    }
+
+    public static function generateSitemap()
+    {
+        $sitemap = Sitemap::create();
+        Page::withDepth()->get()->each(function (Page $page) use ($sitemap) {
+            $sitemap->add(
+                Url::create($page->path)
+                    ->setLastModificationDate($page->updated_at)
+                    ->setPriority($page->depth)
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
+            );
+        });
+        $sitemap->writeToFile(public_path('sitemap.xml'));
+    }
+
+    public function generateSitemapTree($sitemap)
+    {
+        $this->children->each(function (Page $item) use ($sitemap) {
+            $sitemap->add(Url::create($item->path));
+            if (count($item->children)) {
+                $item->generateSitemapTree($sitemap);
+            }
+        });
     }
 }

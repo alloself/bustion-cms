@@ -2,7 +2,7 @@ import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 
 import { ThemeDefinition, createVuetify } from "vuetify";
-import { VDataTable } from "vuetify/labs/components";
+import { VDataTable, VDataTableServer } from "vuetify/labs/components";
 import { VTextField, VCheckbox, VFileInput } from "vuetify/components";
 
 export const defaultDarkTheme: ThemeDefinition = {
@@ -24,7 +24,13 @@ export default createVuetify({
       variant: "outlined",
     },
   },
-  components: { VDataTable, VTextField, VCheckbox, VFileInput },
+  components: {
+    VDataTable,
+    VTextField,
+    VCheckbox,
+    VFileInput,
+    VDataTableServer,
+  },
   theme: {
     defaultTheme: "defaultDarkTheme",
     themes: {

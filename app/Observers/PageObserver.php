@@ -14,6 +14,7 @@ class PageObserver
     public function creating(Page $page)
     {
         $page->generatePath();
+        Page::generateSitemap();
     }
 
     /**
@@ -41,6 +42,7 @@ class PageObserver
                 $descendant->save();
             }
         }
+        Page::generateSitemap();
     }
 
     /**
@@ -50,7 +52,7 @@ class PageObserver
      */
     public function deleted(Page $page)
     {
-        //
+        Page::generateSitemap();
     }
 
     /**
@@ -60,7 +62,7 @@ class PageObserver
      */
     public function restored(Page $page)
     {
-        //
+        Page::generateSitemap();
     }
 
     /**
@@ -70,6 +72,6 @@ class PageObserver
      */
     public function forceDeleted(Page $page)
     {
-        //
+        Page::generateSitemap();
     }
 }
