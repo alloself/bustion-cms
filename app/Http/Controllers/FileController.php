@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Traits\ModuleTrait;
 use Illuminate\Http\Request;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class FileController extends Controller
 {
@@ -21,6 +22,10 @@ class FileController extends Controller
         $originalFile = $request->file('file');
         $name = $originalFile->getClientOriginalName();
         $path = $originalFile->storeAs('public/files', uniqid() . "." . $originalFile->getClientOriginalExtension());
+
+        $optimizerChain = OptimizerChainFactory::create();
+        $optimizerChain->optimize($path);
+
         $file = File::create([
             'path' => $path,
             'name' => $name,

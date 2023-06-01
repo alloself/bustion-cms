@@ -156,6 +156,7 @@ const removeRelations = () => {
 
     emits(
       "update:model-value",
+       //@ts-ignore
       props.modelValue.filter((item) => !selected.value.includes(item.id))
     );
   });

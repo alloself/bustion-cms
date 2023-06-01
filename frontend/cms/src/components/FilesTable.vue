@@ -105,7 +105,7 @@ import { computed, inject, ref } from "vue";
 import { toFormData } from "axios";
 
 interface Props {
-  modelValue?: Array<Record<string, unknown> | File>;
+  modelValue?: Array<Record<string, unknown>>;
   title?: string;
   icon?: string;
   type?: string;
@@ -167,6 +167,7 @@ const addnewFile = async () => {
 const removeSelected = () => {
   emits(
     "update:model-value",
+    //@ts-ignore
     props.modelValue.filter(({ id }) => !selected.value.includes(id))
   );
 
