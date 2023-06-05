@@ -22,7 +22,7 @@ class PageController extends Controller
 
     public function admin()
     {
-        return view('pages.admin');
+        return view('admin');
     }
 
 

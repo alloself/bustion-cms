@@ -5,7 +5,7 @@ import { fileURLToPath, URL } from "node:url";
 import { resolve } from "path";
 import { rm } from "node:fs/promises";
 
-const renameIndexPlugin = (newFilename) => {
+const renameIndexPlugin = (newFilename: string) => {
   if (!newFilename) return;
 
   return {
@@ -13,7 +13,7 @@ const renameIndexPlugin = (newFilename) => {
     enforce: "post",
     generateBundle(options, bundle) {
       const indexHtml = bundle["index.html"];
-      indexHtml.fileName = `resources/views/${newFilename}`;
+      indexHtml.fileName = `../resources/views/${newFilename}`;
     },
   };
 };
@@ -38,6 +38,7 @@ export default defineConfig({
     vuetify({
       autoImport: true,
     }),
+    //@ts-ignore
     renameIndexPlugin("admin.blade.php"),
     removeBuildFolder(),
   ],
@@ -53,18 +54,18 @@ export default defineConfig({
   },
   build: {
     emptyOutDir: false,
-    outDir: "../../",
+    outDir: "../../public/",
     rollupOptions: {
       output: {
-        entryFileNames: `public/cms/js/[name].js`,
-        chunkFileNames: `public/cms/js/[name].js`,
+        entryFileNames: `cms/js/[name].js`,
+        chunkFileNames: `cms/js/[name].js`,
         assetFileNames: (assetInfo) => {
           let extType = assetInfo.name.split(".").at(1);
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = "images";
           }
 
-          return `public/cms/${extType}/[name]-[hash][extname]`;
+          return `cms/${extType}/[name]-[hash][extname]`;
         },
         manualChunks: {
           lodash: ["lodash"],
