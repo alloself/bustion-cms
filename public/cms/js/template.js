@@ -1,1 +1,0 @@
-import{a as t}from"./vue-codemirror.js";const o="template",r="Шаблоны",a="mdi-code-greater-than-or-equal",n=t([{title:"Заголовок",key:"name"}]),s=!0;export{n as headers,a as icon,o as key,s as list,r as title};

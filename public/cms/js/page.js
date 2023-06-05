@@ -1,1 +1,0 @@
-import{a as t}from"./vue-codemirror.js";const i="page",l="Страницы",o="mdi-file",s=t([{title:"Заголовок",key:"title"},{title:"Ссылка",key:"slug"},{title:"Язык",key:"language.title"}]),n=!0;export{s as headers,o as icon,i as key,n as list,l as title};

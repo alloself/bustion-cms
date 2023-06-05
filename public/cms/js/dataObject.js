@@ -1,1 +1,0 @@
-import{a as t}from"./vue-codemirror.js";const o="data-object",s="Объекты данных",a="mdi-database",c=t([{title:"Заголовок",key:"title"}]),i=!0;export{c as headers,a as icon,o as key,i as list,s as title};
