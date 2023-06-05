@@ -3,7 +3,7 @@ import { routes } from "@/router/routes";
 import { guards } from "@/router/guards";
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory('/admin'),
   routes,
 });
 

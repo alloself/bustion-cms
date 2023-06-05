@@ -14,10 +14,10 @@
     "integrity": "sha384-Fk4CXqUTuKDJQiH9uBsZ8fQ0cmSjrNtPvCw9i7hPjF8WftkSy169pKG5EetL/VJ2"
   },
   "resources/scss/index.scss": {
-    "file": "assets/index-c17fc2e4.css",
+    "file": "assets/index-2a93007a.css",
     "isEntry": true,
     "src": "resources/scss/index.scss",
-    "integrity": "sha384-goJqM3dvqV3fh3nmLZnmEZf/0GhARPRnM90K20P2K+nyikXeH7Ad5e+9eluGsJ5L"
+    "integrity": "sha384-hjIPNu7ojF8PvmbNcWUoPv8ONK5Wu3Vwzutn4qgxx7X3junOwagrQOE8XC2BOai3"
   },
   "storage/app/public/line.svg": {
     "file": "assets/line-fb307ec2.svg",
