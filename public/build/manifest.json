@@ -10,15 +10,15 @@
     "integrity": "sha384-+Yqvb3wEIMGj1GLB9KrX7YEmAy7U2AM3gOdRTLv7ayePVhEOvVhDeQBoCotQBo88"
   },
   "resources/js/index.js": {
-    "file": "assets/index-402d5b3c.js",
+    "file": "assets/index-7dd97d98.js",
     "isEntry": true,
     "src": "resources/js/index.js",
-    "integrity": "sha384-8YGYpjKeOYbBmDwFbChaVM3bExlvP4qQvwvTw2yfP8IY9G4obwaY6B9Ng8CYd5Ci"
+    "integrity": "sha384-nJZCSRwem8Z4TYhYQOOYcEHJrVDV/RqGvu8U7VwHLhvj5wZHWmv9lx6XzhwlZB8R"
   },
   "resources/scss/index.scss": {
-    "file": "assets/index-b3cd43f5.css",
+    "file": "assets/index-17f9e748.css",
     "isEntry": true,
     "src": "resources/scss/index.scss",
-    "integrity": "sha384-VlU3bwYBvlVxTEpPD3Rxf6CSdrGK01hdfYwkjjBWNpBaTQOcGa/8hGYhcuPp44W1"
+    "integrity": "sha384-k3YgoNVKsxwmBCUI6cFHAiklvsjRffeRbwEA8MpboEcYwxAF3dzU4hRmc9xnT8tr"
   }
 }
