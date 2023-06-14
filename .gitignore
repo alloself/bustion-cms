@@ -25,5 +25,5 @@ Homestead.json
 .yarn
 tailwind.config.js
 /resources/
-/resources/js/
-/resources/scss/
+/resources/js/**/*.js
+/resources/scss/**/*.scss
