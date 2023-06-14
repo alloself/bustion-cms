@@ -7,7 +7,7 @@ import manifestSRI from 'vite-plugin-manifest-sri';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/scss/index.scss', 'resources/js/app.js'],
+            input: ['resources/scss/index.scss', 'resources/js/index.js'],
             refresh: true,
         }),
         vue({

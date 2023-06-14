@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
     <url>
-        <loc>http://localhost:8000/404</loc>
-        <lastmod>2023-04-27T02:19:26+00:00</lastmod>
-        <changefreq>monthly</changefreq>
+        <loc>http://promin/404</loc>
+        <lastmod>2023-06-06T14:24:02+00:00</lastmod>
+        <changefreq>daily</changefreq>
             </url>
     <url>
-        <loc>http://localhost:8000</loc>
-        <lastmod>2023-04-27T02:22:47+00:00</lastmod>
-        <changefreq>monthly</changefreq>
-            </url>
-    <url>
-        <loc>http://localhost:8000/proekt65</loc>
-        <lastmod>2023-05-28T21:01:54+00:00</lastmod>
-        <changefreq>monthly</changefreq>
-            </url>
-    <url>
-        <loc>http://localhost:8000/projects/ingerhaus</loc>
-        <lastmod>2023-05-17T17:29:10+00:00</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>1.0</priority>
+        <loc>http://promin</loc>
+        <lastmod>2023-06-13T21:07:31+00:00</lastmod>
+        <changefreq>daily</changefreq>
             </url>
 </urlset>

@@ -23,3 +23,7 @@ Homestead.json
 .phpunit.result.cache
 
 .yarn
+tailwind.config.js
+/resources/
+/resources/js/
+/resources/scss/
