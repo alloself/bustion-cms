@@ -3,7 +3,7 @@ import { routes } from "@/router/routes";
 import { guards } from "@/router/guards";
 
 const router = createRouter({
-  history: createWebHistory('/admin'),
+  history: createWebHistory('/cms'),
   routes,
 });
 

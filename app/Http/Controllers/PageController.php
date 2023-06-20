@@ -20,9 +20,9 @@ class PageController extends Controller
     }
 
 
-    public function admin()
+    public function cms()
     {
-        return view('admin');
+        return view('cms');
     }
 
 

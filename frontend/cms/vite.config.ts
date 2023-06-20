@@ -39,7 +39,7 @@ export default defineConfig({
       autoImport: true,
     }),
     //@ts-ignore
-    renameIndexPlugin("admin.blade.php"),
+    renameIndexPlugin("cms.blade.php"),
     removeBuildFolder(),
   ],
   define: { "process.env": {} },
