@@ -1,8 +1,0 @@
-.bs-input {
-	@apply w-full px-5 py-4 border-2 border-gray-300 rounded-lg outline-none placeholder:text-gray-500 font-semibold;
-	transition: all 0.3s;
-
-	&:focus {
-		@apply border-sky-600;
-	}
-}

@@ -34,9 +34,7 @@ client.interceptors.response.use(
         color: "error",
       });
     }
-    if (error.response?.status === 419) {
-      client.get("/sanctum/csrf-cookie");
-    }
+
 
     return Promise.reject(error);
   }

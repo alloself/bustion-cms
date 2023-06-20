@@ -79,7 +79,7 @@ class PageController extends Controller
 
 
             if (count($value->children)) {
-                $value->children = $this->renderTree($value->children);
+                $value->renderedChildren = $this->renderTree($value->children);
             }
 
             array_push($tree, Blade::render(

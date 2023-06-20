@@ -1,9 +1,0 @@
-.bs-button {
-	@apply inline-flex px-6 py-4 outline-none border-none bg-none text-white rounded-xl font-bold bg-main;
-	transition: all 0.3s;
-
-	&:hover,
-	&:focus {
-		@apply bg-opacity-[.85];
-	}
-}
