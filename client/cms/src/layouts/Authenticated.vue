@@ -79,7 +79,7 @@
       <v-navigation-drawer
         v-model="rightDrawer"
         location="right"
-        width="800"
+        width="1000"
         disable-resize-watcher
       >
         <div id="rightDrawer" class="h-100"></div>

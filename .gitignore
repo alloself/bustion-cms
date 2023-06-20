@@ -27,3 +27,5 @@ tailwind.config.js
 /resources/
 /resources/js/**/*.js
 /resources/scss/**/*.scss
+
+*.js

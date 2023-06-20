@@ -22,7 +22,7 @@ const removeBuildFolder = () => {
   return {
     name: "Cleaning assets folder",
     async buildStart() {
-      await rm(resolve(__dirname, "../../public/cms"), {
+      await rm(resolve(__dirname, "../../public/client/cms"), {
         recursive: true,
         force: true,
       });
@@ -57,15 +57,15 @@ export default defineConfig({
     outDir: "../../public/",
     rollupOptions: {
       output: {
-        entryFileNames: `cms/js/[name].js`,
-        chunkFileNames: `cms/js/[name].js`,
+        entryFileNames: `client/cms/js/[name].js`,
+        chunkFileNames: `client/cms/js/[name].js`,
         assetFileNames: (assetInfo) => {
           let extType = assetInfo.name.split(".").at(1);
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = "images";
           }
 
-          return `cms/${extType}/[name]-[hash][extname]`;
+          return `client/cms/${extType}/[name]-[hash][extname]`;
         },
         manualChunks: {
           lodash: ["lodash"],

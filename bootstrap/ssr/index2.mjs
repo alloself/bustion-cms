@@ -1,122 +1,215 @@
-import { Navigation, Thumbs } from "swiper";
-import Swiper from "swiper/bundle";
-const selector = (el, all = false) => {
-  el = el.trim();
-  if (all) {
-    el = [...document.querySelectorAll(el)];
+import { createApp } from "vue/dist/vue.esm-bundler.js";
+import { ref } from "vue";
+import * as AOS from "aos";
+import Swiper, { Navigation, HashNavigation, Mousewheel } from "swiper";
+import SwiperAnimation from "@cycjimmy/swiper-animation";
+const modalVisibility = ref(false);
+const toggleModalVisibility = () => {
+  modalVisibility.value = !modalVisibility.value;
+  if (modalVisibility.value) {
+    document.body.classList.add("modal-open");
   } else {
-    el = document.querySelector(el);
+    document.body.classList.remove("modal-open");
   }
-  if (!el) {
-    return;
-  }
-  return el;
 };
-const on = (el, event, func) => {
-  if (typeof el === "string")
-    el = selector(el);
-  if (!el) {
-    return;
+const aos = "";
+function initMenu() {
+  const $menuTrigger = document.querySelector(".js-menu-trigger");
+  const $menuCanvas = document.querySelector(".js-menu-canvas");
+  const $menuClose = document.querySelector(".js-menu-close");
+  const $menuItems = document.querySelectorAll(".js-menu-item");
+  $menuTrigger && $menuTrigger.addEventListener("click", (e) => {
+    $menuCanvas.classList.toggle("is-open");
+  });
+  $menuClose && $menuClose.addEventListener("click", (e) => {
+    $menuCanvas.classList.remove("is-open");
+  });
+  $menuItems.forEach(($item) => {
+    $item.addEventListener("click", (e) => {
+      $menuCanvas.classList.remove("is-open");
+    });
+  });
+}
+function initBGBlock() {
+  const $bgBlock = document.querySelector(".js-bg-block");
+  if (window.location.pathname !== "/") {
+    $bgBlock && $bgBlock.classList.add("is-inited");
   }
-  return el.addEventListener(event, func);
-};
-const menuButton = selector(".menu-btn");
-const menuLinks = selector(".menu");
-let setPause = true;
-const toggleMenu = () => {
-  [menuButton, menuLinks, selector(".backdrop")].forEach(
-    (el) => el.classList.toggle("active")
-  );
-  setTimeout(() => setPause = true, 500);
-};
-on(menuLinks, "click", (event) => {
-  const target = event.target;
-  const index = target.dataset.indexMenu;
-  if (index && setPause) {
-    setPause = false;
-    swiper.slideTo(index - 1);
-    toggleMenu();
+}
+function initHeader() {
+  const $header = document.querySelector(".js-header");
+  window.addEventListener("scroll", (e) => {
+    if ($header.classList.contains("bs-header--inner") && window.scrollY > 0) {
+      if (!$header.classList.contains("bs-header--sticky")) {
+        $header.classList.add("bs-header--sticky");
+      }
+    } else {
+      $header.classList.remove("bs-header--sticky");
+    }
+  });
+}
+function initProjectSlider() {
+  const $projectSlider = document.querySelectorAll(".js-project-slider");
+  $projectSlider.forEach(($slider) => {
+    const $swiperTrigger = $slider.querySelector(".js-project-slider-swiper");
+    const $label = $slider.querySelector(".js-project-slider-label");
+    const $title = $slider.querySelector(".js-project-slider-title");
+    const $desc = $slider.querySelector(".js-project-slider-desc");
+    const $swiperPrev = $slider.querySelector(".js-project-slider-prev");
+    const $swiperNext = $slider.querySelector(".js-project-slider-next");
+    function currentSlide(direction) {
+      let activeSlide = $swiperTrigger.querySelector(".swiper-slide.is-current");
+      let siblingElem;
+      if (direction == "next") {
+        siblingElem = activeSlide.nextElementSibling;
+      } else if (direction == "prev") {
+        siblingElem = activeSlide.previousElementSibling;
+      } else if (direction == "current") {
+        siblingElem = activeSlide;
+      }
+      if (siblingElem) {
+        activeSlide.classList.remove("is-current");
+        siblingElem.classList.add("is-current");
+        $label.innerText = siblingElem.dataset.label;
+        $title.innerText = siblingElem.dataset.title;
+        $desc.innerText = siblingElem.dataset.desc;
+      }
+    }
+    const swiper = new Swiper($swiperTrigger, {
+      simulateTouch: false,
+      modules: [Navigation],
+      speed: 700,
+      spaceBetween: 0,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      breakpoints: {
+        1024: {
+          centeredSlides: false
+        }
+      },
+      on: {
+        init: function() {
+          const $activeSlide = $swiperTrigger.querySelector(".swiper-slide.swiper-slide-active");
+          $activeSlide.classList.add("is-current");
+          currentSlide("current");
+        }
+      }
+    });
+    $swiperPrev && $swiperPrev.addEventListener("click", (e) => {
+      swiper.slidePrev();
+      currentSlide("prev");
+    });
+    $swiperNext && $swiperNext.addEventListener("click", (e) => {
+      swiper.slideNext();
+      currentSlide("next");
+    });
+  });
+}
+function initVerticalSlider() {
+  const $swiperTriggers = document.querySelectorAll(".js-vertical-slider");
+  $swiperTriggers.forEach(($swiperElement) => {
+    const swiper = new Swiper($swiperElement, {
+      direction: "vertical",
+      slidesPerView: "auto",
+      simulateTouch: false,
+      autoHeight: true,
+      centeredSlides: true,
+      speed: 700,
+      spaceBetween: 0
+    });
+    $swiperElement.addEventListener("mousewheel", function(event) {
+      if (!event.target.closest(".js-vertical-slider-item") && !event.target.classList.contains(".js-vertical-slider-item")) {
+        return;
+      }
+      let delta;
+      if (event.wheelDelta) {
+        delta = event.wheelDelta;
+      } else {
+        delta = -1 * event.deltaY;
+      }
+      if (delta < 0) {
+        if (swiper.isEnd && !swiper.animating) {
+          return;
+        } else {
+          swiper.slideNext();
+          event.stopPropagation();
+        }
+      } else if (delta > 0) {
+        if (swiper.activeIndex == 0 && !swiper.animating) {
+          return;
+        } else {
+          swiper.slidePrev();
+          event.stopPropagation();
+        }
+      }
+    });
+  });
+}
+function initMainSlider() {
+  const $mainSwiper = document.querySelector(".js-main-slider-swiper");
+  const $slideName = document.querySelector(".js-slide-name");
+  const $slideActive = document.querySelector(".js-slide-active");
+  const $slideLength = document.querySelector(".js-slide-length");
+  const swiperAnimation = new SwiperAnimation();
+  function setSliderInfo(swiper) {
+    $slideName.innerText = swiper.slides[swiper.activeIndex].dataset.name;
+    $slideActive.innerText = swiper.activeIndex + 1;
+    $slideLength.innerText = swiper.slides.length;
   }
-});
-on(menuButton, "click", () => {
-  if (setPause) {
-    setPause = false;
-    toggleMenu();
-  }
-});
-if (selector(".fullscreen-swiper")) {
-  const swiper2 = new Swiper(".fullscreen-swiper", {
-    pagination: {
-      el: ".swiper-pagination",
-      type: "progressbar"
-    },
-    navigation: {
-      nextEl: ".step-card",
-      prevEl: ".swiper-prev"
+  new Swiper($mainSwiper, {
+    simulateTouch: true,
+    modules: [HashNavigation, Mousewheel],
+    speed: 700,
+    spaceBetween: 0,
+    slidesPerView: 1,
+    hashNavigation: {
+      watchState: true
     },
     mousewheel: {
-      invert: false
-    },
-    speed: 800,
-    effect: "fade",
-    loop: true,
-    fadeEffect: {
-      crossFade: false
+      invert: false,
+      releaseOnEdges: true,
+      thresholdTime: 100
     },
     on: {
-      init: function() {
-        selector(".swiper-slide[data-theme-dark]", true).forEach(
-          (el) => el.classList.add("text-color-dark")
-        );
+      init(swiper) {
+        swiperAnimation.init(swiper).animate();
+        setSliderInfo(swiper);
+      },
+      slideChange(swiper) {
+        swiperAnimation.init(swiper).animate();
+        setSliderInfo(swiper);
       }
     }
   });
-  swiper2.on("slideChangeTransitionEnd", function() {
-    const activeSlide = selector(".swiper-slide-active[data-theme-dark]");
-    if (activeSlide) {
-      menuButton.classList.add("theme-dark");
-    } else if (menuButton.classList.contains("theme-dark")) {
-      menuButton.classList.remove("theme-dark");
-    }
-  });
+  initVerticalSlider();
 }
-if (selector(".js-gallery-main-slider")) {
-  const thumbsSlider = new Swiper(".js-gallery-thumbs-slider", {
-    modules: [Navigation],
-    speed: 800,
-    spaceBetween: 8,
-    loop: false,
-    navigation: {
-      nextEl: ".js-gallery-preview-next",
-      prevEl: ".js-gallery-preview-prev"
-    },
-    slidesPerView: 2,
-    breakpoints: {
-      420: {
-        slidesPerView: 3
-      },
-      768: {
-        slidesPerView: 4
-      },
-      1024: {
-        slidesPerView: 5
+const app = createApp({
+  methods: {
+    toggleModalVisibility,
+    clickHandler(event) {
+      if (event.target.hasAttribute("data-bs-modal")) {
+        toggleModalVisibility();
       }
     }
-  });
-  const mainSlider = new Swiper(".js-gallery-main-slider", {
-    modules: [Navigation, Thumbs],
-    speed: 800,
-    spaceBetween: 8,
-    slidesPerView: 1,
-    loop: false,
-    watchSlidesProgress: true,
-    navigation: {
-      nextEl: ".js-gallery-main-slider-next",
-      prevEl: ".js-gallery-main-slider-prev"
-    },
-    thumbs: {
-      swiper: thumbsSlider
-    }
-  });
-  console.log(mainSlider);
+  },
+  setup() {
+    return {
+      modalVisibility
+    };
+  }
+});
+app.mount("#app");
+window.IS_TOUCH = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Touch/i.test(navigator.userAgent);
+if (IS_TOUCH) {
+  document.body.classList.add("is-touch");
 }
+document.addEventListener("DOMContentLoaded", (e) => {
+  setTimeout(() => {
+    initMenu();
+    initBGBlock();
+    initHeader();
+    initProjectSlider();
+    initMainSlider();
+  }, 0);
+  AOS.init();
+});

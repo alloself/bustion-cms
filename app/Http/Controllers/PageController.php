@@ -35,7 +35,7 @@ class PageController extends Controller
         })->with('blocks.descendants')->first();
 
         if (!$page && $path !== '/404') {
-            return redirect(App::getLocale() . '/404');
+           // return redirect(App::getLocale() . '/404');
         }
 
         if (!count($page->blocks)) {
@@ -56,7 +56,6 @@ class PageController extends Controller
         ], true) : '';
 
         $blocks = $this->renderTree($page->blocks ?? [], ['header' => $header, 'page' => $page]);
-
 
         $template = Blade::render(
             $page->template->value,
