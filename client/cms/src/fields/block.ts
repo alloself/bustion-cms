@@ -44,7 +44,7 @@ export default function (options?: {
         name: "title",
         type: "text",
       },
-      rule: yup.string().required(),
+      rule: yup.string(),
     },
     {
       component: "v-text-field",
@@ -55,7 +55,7 @@ export default function (options?: {
         name: "subtitle",
         type: "text",
       },
-      rule: yup.string().required(),
+      rule: yup.string(),
     },
     {
       component: "v-text-field",
@@ -66,7 +66,6 @@ export default function (options?: {
         name: "link",
         type: "text",
       },
-      rule: yup.string(),
     },
     {
       component: markRaw(RelationFieldAutocomplete),
@@ -101,6 +100,7 @@ export default function (options?: {
         predefinedValues: { parent_id: options.entity.id },
         relationKey: "parent_id",
         module: "block",
+        showActions: true,
       },
     });
 

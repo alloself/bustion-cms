@@ -12,8 +12,12 @@ const headers = ref([
     key: "title",
   },
   {
-    title: "Ссылка",
+    title: "Слаг",
     key: "slug",
+  },
+  {
+    title: "Ключ",
+    key: "key",
   },
 ]);
 

@@ -171,8 +171,9 @@ trait ModuleTrait
      * @param  \App\Models\Page  $page
      * @return \Illuminate\Http\Response
      */
-    public function destroyMany($ids = [])
+    public function deleteMany(Request $request)
     {
-        //
+        $this->model()::destroy($request->toArray());
+        return;
     }
 }

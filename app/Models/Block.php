@@ -19,13 +19,17 @@ class Block extends Model
     }
 
 
-    protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show', 'parent_id'];
+    protected $fillable = ['name', 'link', 'content', 'slug', 'subtitle', 'template_id', 'title', 'page_id', 'show', 'parent_id', 'order'];
 
     protected $with = [
         'template',
         'children',
         'images',
         'files'
+    ];
+
+    protected $casts = [
+        'show' => 'boolean',
     ];
 
     public function toSearchableArray()

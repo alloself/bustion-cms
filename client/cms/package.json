@@ -11,6 +11,7 @@
     "@codemirror/lang-php": "^6.0.1",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@mdi/font": "7.2.96",
+    "@tiptap/extension-link": "^2.0.3",
     "@tiptap/pm": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
     "@tiptap/vue-3": "^2.0.3",

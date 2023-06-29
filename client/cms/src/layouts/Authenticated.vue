@@ -79,7 +79,7 @@
       <v-navigation-drawer
         v-model="rightDrawer"
         location="right"
-        width="1000"
+        :width="rightDrawerWidth"
         disable-resize-watcher
       >
         <div id="rightDrawer" class="h-100"></div>
@@ -91,8 +91,9 @@
 import { computed, defineAsyncComponent, provide, ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import { useModuleStore } from "@/stores/module";
-import { useTheme } from "vuetify";
+import { useDisplay, useTheme } from "vuetify";
 import { useRoute } from "vue-router";
+
 const Logo = defineAsyncComponent(() => import("@/components/Logo.vue"));
 const userStore = useUserStore();
 const moduleStore = useModuleStore();
@@ -101,6 +102,7 @@ const leftDrawer = ref(true);
 const rightDrawer = ref(false);
 const menu = ref(false);
 const route = useRoute();
+const display = useDisplay()
 
 const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark
@@ -113,6 +115,10 @@ const routerKey = computed(() => route.fullPath);
 
 const appModules = computed(() => {
   return Object.values(moduleStore.modules).filter((item) => item.list)
+})
+
+const rightDrawerWidth = computed(() => {
+  return (display.width.value - 256) / 2 || 1000
 })
 
 provide("rightDrawer", rightDrawer);

@@ -37,6 +37,7 @@ Route::prefix('cms')->group(function () {
         Route::apiResource('menu', MenuController::class);
         Route::apiResource('menu-item', MenuItemController::class);
         Route::apiResource('file', FileController::class);
+        Route::post('file/unused', [FileController::class, 'deleteUnused']);
         Route::prefix('destroy')->group(function () {
             Route::post('page', [PageController::class, 'deleteMany']);
             Route::post('template', [TemplateController::class, 'deleteMany']);

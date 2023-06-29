@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Traits\ModuleTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class FileController extends Controller
@@ -33,5 +34,16 @@ class FileController extends Controller
         ]);
 
         return $file;
+    }
+
+    public static function deleteUnused(Request $request)
+    {
+        $files =  File::doesntHave('blocks')->get();
+
+        $files->map(function ($file) {
+            Storage::disk('public')->delete($file->path);
+        });
+
+        return File::doesntHave('blocks')->delete();
     }
 }

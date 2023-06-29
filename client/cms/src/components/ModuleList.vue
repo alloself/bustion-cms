@@ -6,10 +6,10 @@
     :items="items"
     :items-length="paginateItems?.total || 0"
     :loading="loading"
-    @update:options="getItems"
+    @update:options="onUpdateOptions"
     @click:row="rowClick"
   >
-    <template #footer.prepend>
+    <template #[`footer.prepend`]>
       <v-tooltip location="top" text="Создать" color="primary">
         <template #activator="{ props }">
           <v-btn
@@ -28,12 +28,28 @@
       </v-tooltip>
       <v-tooltip location="top" text="Удалить выбранное" color="primary">
         <template #activator="{ props }">
-          <v-btn icon large :loading="loading" v-bind="props" flat :disabled="!selected.length">
+          <v-btn
+            icon
+            large
+            :loading="loading"
+            v-bind="props"
+            flat
+            :disabled="!selected.length"
+            @click="deleteList"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </template>
         <span>Удалить выбранное</span>
       </v-tooltip>
+      <v-btn
+        class="ml-4"
+        v-if="module.key === 'file'"
+        :loading="loading"
+        flat
+        @click="deleteUnused"
+        >Удалить неиспользуемые
+      </v-btn>
       <v-spacer></v-spacer>
     </template>
   </v-data-table-server>
@@ -52,13 +68,19 @@ const selected = ref([]);
 const loading = ref(false);
 const paginateItems = ref();
 const items = computed(() => paginateItems.value?.data || []);
+const options = ref();
+
+const onUpdateOptions = async (value: any) => {
+  options.value = value;
+  await getItems(options.value);
+};
 
 const getItems = async (options: any) => {
   loading.value = true;
   try {
     const { data } = await client.get(`/api/cms/${module.value.key}`, {
       params: {
-        page:options.page,
+        page: options.page,
         per_page: options.itemsPerPage,
         paginate: true,
       },
@@ -77,6 +99,25 @@ const rowClick = (event: any, { item: { value } }: any) => {
       name: `${capitalize(module.value.key)}Detail`,
       params: { id: value },
     });
+  }
+};
+
+const deleteList = async () => {
+  try {
+    await client.post(`/api/cms/destroy/${module.value.key}`, selected.value);
+    selected.value = [];
+    await getItems(options.value);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const deleteUnused = async () => {
+  try {
+    await client.post(`/api/cms/${module.value.key}/unused`);
+    await getItems(options.value);
+  } catch (e) {
+    console.log(e);
   }
 };
 </script>

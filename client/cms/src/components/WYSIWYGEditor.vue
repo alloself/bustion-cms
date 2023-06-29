@@ -1,7 +1,47 @@
 <template>
-  <v-sheet variant="outlined" :border="2" rounded>
+  <v-sheet variant="outlined" :border="true" rounded class="mb-6">
     <v-toolbar density="compact" dark>
       <v-btn-group v-if="editor" multiple class="flex">
+        <v-menu
+          v-model="showLink"
+          :close-on-content-click="false"
+          location="right"
+          offset="16"
+        >
+          <template v-slot:activator="menu">
+            <v-btn
+              v-bind="{ ...menu.props }"
+              size="x-small"
+              :color="editor.isActive('link') ? 'primary' : 'transparent'"
+              :rounded="0"
+            >
+              <v-icon>mdi-link-variant</v-icon>
+            </v-btn>
+          </template>
+
+          <v-card width="500">
+            <v-card-title>Ссылка</v-card-title>
+            <v-card-text class="mt-2">
+              <v-row>
+                <v-col>
+                  <v-text-field v-model="link"></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card-text>
+
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+
+              <v-btn variant="text" @click="(showLink = false), (link = '')">
+                Отмена
+              </v-btn>
+              <v-btn color="primary" variant="text" @click="addLink">
+                Добавить
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
         <v-btn
           size="x-small"
           :color="editor.isActive(key) ? 'primary' : 'transparent'"
@@ -14,7 +54,9 @@
         </v-btn>
       </v-btn-group></v-toolbar
     >
-    <editor-content :editor="editor" />
+    <v-sheet class="p-4" dark variant="outlined" rounded>
+      <editor-content :editor="editor" />
+    </v-sheet>
   </v-sheet>
 </template>
 
@@ -22,19 +64,27 @@
 import { useEditor, EditorContent, type Content } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import { onBeforeMount, ref, watch } from "vue";
+import Link from "@tiptap/extension-link";
 
 const props = defineProps<{ modelValue?: Content }>();
 const emits = defineEmits(["update:model-value"]);
 
+const showLink = ref(false);
+const link = ref("");
+
 const editor = useEditor({
   content: props.modelValue,
-  extensions: [StarterKit],
+  extensions: [StarterKit, Link],
   onUpdate: ({ editor }) => {
     emits("update:model-value", editor.getHTML());
   },
 });
 
 const actions = ref({
+  unlink: {
+    action: () => editor.value?.commands.unsetLink(),
+    icon: "mdi-link-off",
+  },
   bold: {
     action: () => editor.value?.chain().focus().toggleBold().run(),
     icon: "mdi-format-bold",
@@ -105,10 +155,16 @@ const actions = ref({
     action: () => editor.value?.commands.redo(),
     icon: "mdi-redo",
   },
-  /*
-  undo,
-  redo,*/
 });
+
+const addLink = () => {
+  editor.value?.commands.setLink({
+    href: link.value,
+    target: "_blank",
+  });
+  showLink.value = false;
+  link.value = "";
+};
 
 onBeforeMount(() => {
   editor.value?.destroy();

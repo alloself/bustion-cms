@@ -14,7 +14,9 @@ client.interceptors.request.use(
   (config) => {
     return config;
   },
-  (error) => {}
+  (error) => {
+    return error
+  }
 );
 
 client.interceptors.response.use(
@@ -23,7 +25,7 @@ client.interceptors.response.use(
   },
   async (error) => {
     const errorMessage = error?.response?.data?.message || error.message;
-    if (error.response?.status === 401 || error.code === "ERR_NETWORK") {
+    if (error.response?.status === 401 || error.code === "ERR_NETWORK" || error.response?.status === 410) {
       const userStore = useUserStore();
       await userStore.logout();
     } else {

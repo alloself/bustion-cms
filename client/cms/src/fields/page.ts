@@ -141,6 +141,7 @@ export default function (options?: {
         predefinedValues: { page_id: options.entity.id },
         relationKey: "page_id",
         module: "block",
+        showActions: true,
       },
     });
     fields.value.push({
