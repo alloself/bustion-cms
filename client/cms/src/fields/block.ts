@@ -33,7 +33,7 @@ export default function (options?: {
         name: "slug",
         type: "text",
       },
-      rule: yup.string().required(),
+      rule: yup.string(),
     },
     {
       component: "v-text-field",

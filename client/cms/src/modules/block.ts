@@ -21,7 +21,7 @@ const headers = ref([
   },
 ]);
 
-const list = true;
+const list = false;
 
 export { key, title, icon, headers, list };
 
