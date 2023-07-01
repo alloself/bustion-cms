@@ -4,3 +4,5 @@ cms
 *.xml
 /public
 /build/**/*
+
+./build/**/*

@@ -8,10 +8,10 @@
     "css": [
       "assets/index-73168167.css"
     ],
-    "file": "assets/index-199ad911.js",
+    "file": "assets/index-7a4f58e2.js",
     "isEntry": true,
     "src": "resources/js/index.js",
-    "integrity": "sha384-g0bKXY+Zcw97/X5AoAJjQBKz4jjqT+oI7/yqi8izRTBgP7CqSXL8p/ZtUkyOXCIX"
+    "integrity": "sha384-ZbO4DH2BTA6mXBCTD+L78j2VEYjqC1beO9Np31PbnUbdoGoFO7ONCBvLN2eC1ff4"
   },
   "resources/scss/index.scss": {
     "file": "assets/index-ec82bd48.css",

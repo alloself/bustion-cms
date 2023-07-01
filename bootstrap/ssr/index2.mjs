@@ -117,7 +117,9 @@ function initVerticalSlider() {
       speed: 700,
       spaceBetween: 0
     });
-    $swiperElement.addEventListener("mousewheel", function(event) {
+    let timeout;
+    let timeoutDuration = 100;
+    $swiperElement.addEventListener("mousewheel", (event) => {
       if (!event.target.closest(".js-vertical-slider-item") && !event.target.classList.contains(".js-vertical-slider-item")) {
         return;
       }
@@ -131,15 +133,25 @@ function initVerticalSlider() {
         if (swiper.isEnd && !swiper.animating) {
           return;
         } else {
-          swiper.slideNext();
           event.stopPropagation();
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+          timeout = setTimeout(() => {
+            swiper.slideNext();
+          }, timeoutDuration);
         }
       } else if (delta > 0) {
         if (swiper.activeIndex == 0 && !swiper.animating) {
           return;
         } else {
-          swiper.slidePrev();
           event.stopPropagation();
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+          timeout = setTimeout(() => {
+            swiper.slidePrev();
+          }, timeoutDuration);
         }
       }
     });
@@ -157,7 +169,7 @@ function initMainSlider() {
     $slideLength.innerText = swiper.slides.length;
   }
   new Swiper($mainSwiper, {
-    simulateTouch: true,
+    simulateTouch: false,
     modules: [HashNavigation, Mousewheel],
     speed: 700,
     spaceBetween: 0,
@@ -166,9 +178,7 @@ function initMainSlider() {
       watchState: true
     },
     mousewheel: {
-      invert: false,
-      releaseOnEdges: true,
-      thresholdTime: 100
+      invert: false
     },
     on: {
       init(swiper) {
