@@ -27,6 +27,5 @@
         "throttle-debounce": "^5.0.0",
         "vue-loader": "next",
         "vue-router": "^4.2.2"
-    },
-    "packageManager": "yarn@1.22.19"
+    }
 }

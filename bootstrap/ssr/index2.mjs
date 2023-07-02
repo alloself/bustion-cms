@@ -108,7 +108,7 @@ function initProjectSlider() {
 }
 function initMainSliderMousewheel(parentSwiperInstance) {
   let debounceDuration = 200;
-  parentSwiperInstance.el.addEventListener("mousewheel", debounce(debounceDuration, (event) => {
+  parentSwiperInstance.el.addEventListener("wheel", debounce(debounceDuration, (event) => {
     let delta;
     if (event.wheelDelta) {
       delta = event.wheelDelta;
@@ -137,7 +137,7 @@ function initMainSliderMousewheel(parentSwiperInstance) {
         parentSwiperInstance.slidePrev();
       }
     }
-  }, { noLeading: true }));
+  }, { noLeading: true }), { passive: true });
 }
 function initVerticalSlider() {
   const $verticalSliders = document.querySelectorAll(".js-vertical-slider");
