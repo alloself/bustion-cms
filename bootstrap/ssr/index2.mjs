@@ -1,8 +1,9 @@
 import { createApp } from "vue/dist/vue.esm-bundler.js";
 import { ref } from "vue";
 import * as AOS from "aos";
-import Swiper, { Navigation, HashNavigation, Mousewheel } from "swiper";
+import Swiper, { Navigation, HashNavigation } from "swiper";
 import SwiperAnimation from "@cycjimmy/swiper-animation";
+import { debounce } from "throttle-debounce";
 const modalVisibility = ref(false);
 const toggleModalVisibility = () => {
   modalVisibility.value = !modalVisibility.value;
@@ -78,7 +79,7 @@ function initProjectSlider() {
     const swiper = new Swiper($swiperTrigger, {
       simulateTouch: false,
       modules: [Navigation],
-      speed: 700,
+      speed: 500,
       spaceBetween: 0,
       centeredSlides: true,
       slidesPerView: "auto",
@@ -88,7 +89,7 @@ function initProjectSlider() {
         }
       },
       on: {
-        init: function() {
+        init() {
           const $activeSlide = $swiperTrigger.querySelector(".swiper-slide.swiper-slide-active");
           $activeSlide.classList.add("is-current");
           currentSlide("current");
@@ -105,55 +106,50 @@ function initProjectSlider() {
     });
   });
 }
+function initMainSliderMousewheel(parentSwiperInstance) {
+  let debounceDuration = 200;
+  parentSwiperInstance.el.addEventListener("mousewheel", debounce(debounceDuration, (event) => {
+    let delta;
+    if (event.wheelDelta) {
+      delta = event.wheelDelta;
+    } else {
+      delta = -1 * event.deltaY;
+    }
+    if (event.target.closest(".js-vertical-slider-item") || event.target.classList.contains(".js-vertical-slider-item")) {
+      const currentVerticalSlider = event.target.closest(".js-vertical-slider").swiper;
+      if (delta < 0) {
+        currentVerticalSlider.slideNext();
+        if (currentVerticalSlider.isEnd && !currentVerticalSlider.animating) {
+          parentSwiperInstance.slideNext();
+        }
+      }
+      if (delta > 0) {
+        currentVerticalSlider.slidePrev();
+        if (currentVerticalSlider.isBeginning && !currentVerticalSlider.animating) {
+          parentSwiperInstance.slidePrev();
+        }
+      }
+    } else {
+      if (delta < 0 && !parentSwiperInstance.animating) {
+        parentSwiperInstance.slideNext();
+      }
+      if (delta > 0 && !parentSwiperInstance.animating) {
+        parentSwiperInstance.slidePrev();
+      }
+    }
+  }, { noLeading: true }));
+}
 function initVerticalSlider() {
-  const $swiperTriggers = document.querySelectorAll(".js-vertical-slider");
-  $swiperTriggers.forEach(($swiperElement) => {
-    const swiper = new Swiper($swiperElement, {
+  const $verticalSliders = document.querySelectorAll(".js-vertical-slider");
+  $verticalSliders.forEach(($swiperElement) => {
+    new Swiper($swiperElement, {
       direction: "vertical",
       slidesPerView: "auto",
       simulateTouch: false,
       autoHeight: true,
       centeredSlides: true,
-      speed: 700,
+      speed: 500,
       spaceBetween: 0
-    });
-    let timeout;
-    let timeoutDuration = 100;
-    $swiperElement.addEventListener("mousewheel", (event) => {
-      if (!event.target.closest(".js-vertical-slider-item") && !event.target.classList.contains(".js-vertical-slider-item")) {
-        return;
-      }
-      let delta;
-      if (event.wheelDelta) {
-        delta = event.wheelDelta;
-      } else {
-        delta = -1 * event.deltaY;
-      }
-      if (delta < 0) {
-        if (swiper.isEnd && !swiper.animating) {
-          return;
-        } else {
-          event.stopPropagation();
-          if (timeout) {
-            clearTimeout(timeout);
-          }
-          timeout = setTimeout(() => {
-            swiper.slideNext();
-          }, timeoutDuration);
-        }
-      } else if (delta > 0) {
-        if (swiper.activeIndex == 0 && !swiper.animating) {
-          return;
-        } else {
-          event.stopPropagation();
-          if (timeout) {
-            clearTimeout(timeout);
-          }
-          timeout = setTimeout(() => {
-            swiper.slidePrev();
-          }, timeoutDuration);
-        }
-      }
     });
   });
 }
@@ -169,21 +165,20 @@ function initMainSlider() {
     $slideLength.innerText = swiper.slides.length;
   }
   new Swiper($mainSwiper, {
+    modules: [HashNavigation],
     simulateTouch: false,
-    modules: [HashNavigation, Mousewheel],
-    speed: 700,
+    speed: 500,
     spaceBetween: 0,
     slidesPerView: 1,
     hashNavigation: {
       watchState: true
     },
-    mousewheel: {
-      invert: false
-    },
     on: {
       init(swiper) {
         swiperAnimation.init(swiper).animate();
         setSliderInfo(swiper);
+        initMainSliderMousewheel(swiper);
+        initVerticalSlider();
       },
       slideChange(swiper) {
         swiperAnimation.init(swiper).animate();
@@ -191,7 +186,6 @@ function initMainSlider() {
       }
     }
   });
-  initVerticalSlider();
 }
 const app = createApp({
   methods: {

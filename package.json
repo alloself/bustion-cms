@@ -24,6 +24,7 @@
         "tailwindcss": "^3.3.2",
         "vite-plugin-compression": "^0.5.1",
         "vue": "^3.3.4",
+        "throttle-debounce": "^5.0.0",
         "vue-loader": "next",
         "vue-router": "^4.2.2"
     },
