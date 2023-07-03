@@ -1,11 +1,11 @@
 <template>
   <v-main>
     <section class="main-block">
-      <div class="block-bg"></div>
-      <div class="block-bg__elem block-bg__elem--left"></div>
-      <div class="block-bg__elem block-bg__elem--right"></div>
-      <div class="block-bg__elem block-bg__elem--center"></div>
-      <div class="block-bg__elem block-bg__elem--line"></div>
+      <div class="block-bg" :key="'false'"></div>
+      <div class="block-bg__elem block-bg__elem--left" :key="'false'"></div>
+      <div class="block-bg__elem block-bg__elem--right" :key="'false'"></div>
+      <div class="block-bg__elem block-bg__elem--center" :key="'false'"></div>
+      <div class="block-bg__elem block-bg__elem--line" :key="'false'"></div>
       <slot />
     </section>
   </v-main>
@@ -29,7 +29,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $imgpath: "@/assets/img/";
 $blue: #096ed1;
 $sm: 576px;

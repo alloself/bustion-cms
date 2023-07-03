@@ -19,7 +19,7 @@
       :loading="loading"
     >
       <template #bottom><div></div></template>
-      <template #item.path="{ item }">
+      <template #[`item.path`]="{ item }">
         <a :href="item.raw.path" target="_blank">{{ item.raw.path }}</a>
       </template>
     </v-data-table>
@@ -72,7 +72,7 @@
             >
               Отмена
             </v-btn>
-            <v-btn color="primary" variant="text" @click="addnewFile">
+            <v-btn color="primary" variant="text" @click="addNewFile">
               Добавить
             </v-btn>
           </v-card-actions>
@@ -94,6 +94,69 @@
         </template>
         <span>Удалить выбранное</span>
       </v-tooltip>
+      <v-menu
+        v-model="showSearch"
+        :close-on-content-click="false"
+        location="right"
+        offset="16"
+      >
+        <template v-slot:activator="menu">
+          <v-tooltip location="top" text="Поиск" color="primary">
+            <template #activator="tooltip">
+              <v-btn
+                icon
+                large
+                v-bind="{ ...tooltip.props, ...menu.props }"
+                :loading="loading"
+                flat
+                @click="showSearch = true"
+              >
+                <v-icon>mdi-magnify</v-icon>
+              </v-btn>
+            </template>
+            <span>Поиск</span>
+          </v-tooltip>
+        </template>
+
+        <v-card width="500">
+          <v-card-title>Найти</v-card-title>
+          <v-card-text class="mt-2">
+            <v-row>
+              <v-col>
+                <v-text-field label="Ключ" v-model="fileKey"></v-text-field>
+              </v-col>
+              <v-col>
+                <v-autocomplete
+                  placeholder="Поиск"
+                  v-model="searchedModelValue"
+                  item-title="name"
+                  return-object
+                  chips
+                  v-model:search="search"
+                  :items="searchedItems"
+                ></v-autocomplete>
+              </v-col>
+            </v-row>
+          </v-card-text>
+
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+              variant="text"
+              @click="
+                (showSearch = false), ((searchedModelValue = {}), (search = ''))
+              "
+            >
+              Отмена
+            </v-btn>
+            <v-btn color="primary" variant="text" @click="addExistingFile">
+              Добавить
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-menu>
       <v-spacer></v-spacer>
     </v-card-actions>
   </v-card>
@@ -101,7 +164,7 @@
 
 <script setup lang="ts">
 import { client } from "@/plugins/axios";
-import { computed, inject, ref } from "vue";
+import { computed, inject, ref, watch } from "vue";
 import { toFormData } from "axios";
 
 interface Props {
@@ -130,6 +193,10 @@ const fileKey = ref("");
 const files = ref();
 
 const showCreate = ref(false);
+const showSearch = ref(false);
+const search = ref("");
+const searchedModelValue = ref();
+const searchedItems = ref([]);
 
 const headers = ref([
   {
@@ -146,7 +213,7 @@ const headers = ref([
   },
 ]);
 
-const addnewFile = async () => {
+const addNewFile = async () => {
   if (files.value.length) {
     const { data } = await client.post(
       "/api/cms/file",
@@ -163,6 +230,38 @@ const addnewFile = async () => {
     files.value = [];
   }
 };
+
+const addExistingFile = async () => {
+  emits("update:model-value", [
+    ...props.modelValue,
+    {
+      ...searchedModelValue.value,
+      pivot: { key: fileKey.value, type: props.type },
+    },
+  ]);
+
+  showSearch.value = false
+};
+
+const getSearchedItems = async (string = "") => {
+  try {
+    const { data } = await client.get(`/api/cms/file`, {
+      params: {
+        search: string,
+      },
+    });
+    searchedItems.value = data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+watch(
+  () => search.value,
+  () => {
+    getSearchedItems(search.value);
+  }
+);
 
 const removeSelected = () => {
   emits(
