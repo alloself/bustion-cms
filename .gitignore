@@ -31,3 +31,5 @@ tailwind.config.js
 *.js
 
 /public/build
+
+/bootstrap/ssr/*

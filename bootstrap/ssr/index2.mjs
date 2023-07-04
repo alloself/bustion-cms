@@ -58,23 +58,17 @@ function initProjectSlider() {
     const $desc = $slider.querySelector(".js-project-slider-desc");
     const $swiperPrev = $slider.querySelector(".js-project-slider-prev");
     const $swiperNext = $slider.querySelector(".js-project-slider-next");
-    function currentSlide(direction) {
-      let activeSlide = $swiperTrigger.querySelector(".swiper-slide.is-current");
-      let siblingElem;
-      if (direction == "next") {
-        siblingElem = activeSlide.nextElementSibling;
-      } else if (direction == "prev") {
-        siblingElem = activeSlide.previousElementSibling;
-      } else if (direction == "current") {
-        siblingElem = activeSlide;
-      }
-      if (siblingElem) {
-        activeSlide.classList.remove("is-current");
-        siblingElem.classList.add("is-current");
-        $label.innerText = siblingElem.dataset.label;
-        $title.innerText = siblingElem.dataset.title;
-        $desc.innerText = siblingElem.dataset.desc;
-      }
+    function setActiveSlide(swiperInstance) {
+      $swiperTrigger.querySelectorAll(".swiper-slide").forEach((slideElem) => {
+        if (slideElem.classList.contains("swiper-slide-active")) {
+          slideElem.classList.add("is-current");
+          $label.innerText = slideElem.dataset.label;
+          $title.innerText = slideElem.dataset.title;
+          $desc.innerText = slideElem.dataset.desc;
+        } else {
+          slideElem.classList.remove("is-current");
+        }
+      });
     }
     const swiper = new Swiper($swiperTrigger, {
       simulateTouch: false,
@@ -82,33 +76,46 @@ function initProjectSlider() {
       speed: 500,
       spaceBetween: 0,
       centeredSlides: true,
-      slidesPerView: "auto",
+      slidesPerView: 3,
       breakpoints: {
+        768: {
+          slidesPerView: 4
+        },
         1024: {
-          centeredSlides: false
+          slidesPerView: 3
+        },
+        1280: {
+          slidesPerView: 5,
+          initialSlide: 2
         }
       },
       on: {
-        init() {
-          const $activeSlide = $swiperTrigger.querySelector(".swiper-slide.swiper-slide-active");
-          $activeSlide.classList.add("is-current");
-          currentSlide("current");
+        init(swiper2) {
+          setActiveSlide();
+        },
+        slideChangeTransitionStart(swiper2) {
+          setActiveSlide();
         }
       }
     });
     $swiperPrev && $swiperPrev.addEventListener("click", (e) => {
       swiper.slidePrev();
-      currentSlide("prev");
     });
     $swiperNext && $swiperNext.addEventListener("click", (e) => {
       swiper.slideNext();
-      currentSlide("next");
     });
   });
 }
 function initMainSliderMousewheel(parentSwiperInstance) {
-  let debounceDuration = 200;
-  parentSwiperInstance.el.addEventListener("wheel", debounce(debounceDuration, (event) => {
+  if (window.location.pathname === "/") {
+    document.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    }, { passive: false });
+  }
+  parentSwiperInstance.el.addEventListener("wheel", debounce(200, (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     let delta;
     if (event.wheelDelta) {
       delta = event.wheelDelta;
