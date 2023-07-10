@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', '/' . env('APP_DEFAULT_LANGUAGE'));
 Route::get('/cms{any}', [PageController::class, 'cms'])->where('any', '.*');
 Route::prefix('{language}')->get('/{path?}', [PageController::class, 'web'])->where('path', '.*')->name('web');
+
+Route::post('/order', [OrderController::class, 'store']);

@@ -74,7 +74,7 @@ class PageController extends Controller
     {
         $tree = [];
 
-        foreach ($array as $key => $value) {
+        foreach ($array->sortByDesc('order') as $key => $value) {
 
 
             if (count($value->children)) {

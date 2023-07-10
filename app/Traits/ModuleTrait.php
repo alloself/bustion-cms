@@ -24,23 +24,12 @@ trait ModuleTrait
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-
         $values = $request->all();
 
         $model = $this->model()::create($values);

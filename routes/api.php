@@ -7,6 +7,7 @@ use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ Route::prefix('cms')->group(function () {
         Route::apiResource('menu', MenuController::class);
         Route::apiResource('menu-item', MenuItemController::class);
         Route::apiResource('file', FileController::class);
+        Route::apiResource('order', OrderController::class);
         Route::post('file/unused', [FileController::class, 'deleteUnused']);
         Route::prefix('destroy')->group(function () {
             Route::post('page', [PageController::class, 'deleteMany']);
@@ -48,6 +50,7 @@ Route::prefix('cms')->group(function () {
             Route::post('menu', [MenuController::class, 'deleteMany']);
             Route::post('menu-item', [MenuItemController::class, 'deleteMany']);
             Route::post('file', [FileController::class, 'deleteMany']);
+            Route::post('order', [OrderController::class, 'deleteMany']);
         });
     });
 });
