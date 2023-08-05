@@ -15,9 +15,6 @@ export default function (options?: {
       props: {
         autocomplete: "username",
         label: "Почта",
-        outlined: true,
-        rounded: true,
-        dark: true,
         name: "login",
         prependIcon: "mdi-mail",
         type: "text",
@@ -29,19 +26,16 @@ export default function (options?: {
       key: "password",
       props: {
         autocomplete: "current-password",
-        appendIcon: computed(() =>
+        appendInnerIcon: computed(() =>
           showPassword.value ? "mdi-eye" : "mdi-eye-off"
         ),
-        outlined: true,
-        rounded: true,
-        dark: true,
         label: "Пароль",
         name: "password",
         prependIcon: "mdi-lock",
         type: computed(() => (showPassword.value ? "text" : "password")),
       },
       events: {
-        "click:append": () => (showPassword.value = !showPassword.value),
+        "click:appendInner": () => (showPassword.value = !showPassword.value),
       },
       rule: yup.string().required().min(8),
     },

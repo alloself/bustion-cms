@@ -15,13 +15,13 @@ export const defaultDarkTheme: ThemeDefinition = {
 export default createVuetify({
   defaults: {
     VTextField: {
-      variant: "outlined",
+      variant: "solo-filled",
     },
     VAutocomplete: {
-      variant: "outlined",
+      variant: "solo-filled",
     },
     VFileInput: {
-      variant: "outlined",
+      variant: "solo-filled",
     },
   },
   components: {

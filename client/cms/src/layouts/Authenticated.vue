@@ -102,7 +102,7 @@ const leftDrawer = ref(true);
 const rightDrawer = ref(false);
 const menu = ref(false);
 const route = useRoute();
-const display = useDisplay()
+const display = useDisplay();
 
 const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark
@@ -112,14 +112,13 @@ const toggleTheme = () => {
 
 const routerKey = computed(() => route.fullPath);
 
-
 const appModules = computed(() => {
-  return Object.values(moduleStore.modules).filter((item) => item.list)
-})
+  return Object.values(moduleStore.modules).filter((item) => item.list);
+});
 
 const rightDrawerWidth = computed(() => {
-  return (display.width.value - 256) / 2 || 1000
-})
+  return (display.width.value - 256) / 2 || 1000;
+});
 
 provide("rightDrawer", rightDrawer);
 </script>

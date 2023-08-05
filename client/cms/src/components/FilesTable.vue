@@ -166,6 +166,7 @@
 import { client } from "@/plugins/axios";
 import { computed, inject, ref, watch } from "vue";
 import { toFormData } from "axios";
+import { DataTableHeader } from "@/stores/module";
 
 interface Props {
   modelValue?: Array<Record<string, unknown>>;
@@ -198,10 +199,11 @@ const search = ref("");
 const searchedModelValue = ref();
 const searchedItems = ref([]);
 
-const headers = ref([
+const headers = ref<DataTableHeader[]>([
   {
     title: "Ключ",
     value: "pivot.key",
+    key: "pivot.key",
   },
   {
     title: "Файл",

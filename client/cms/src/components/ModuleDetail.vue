@@ -180,5 +180,5 @@ onMounted(async () => {
 provide("form", form);
 provide("loading", loading);
 provide("initalValues", initalValues);
-provide("predefinedValues", props.predefinedValues);
+provide("predefinedValues", () => props.predefinedValues);
 </script>

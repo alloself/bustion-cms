@@ -28,9 +28,10 @@ class OrderController extends Controller
 
         $model = $this->model()::create($values);
 
-        if ($request->has('files')) {
-            foreach ($values['files'] as $key => $file) {
-                $mapped[$file['id']] = ['key' => '', 'type' => 'file'];
+        if ($request->file('files')) {
+            foreach ($request->file('files') as $key => $file) {
+                $storedFile = FileController::create($file);
+                $mapped[$storedFile['id']] = ['key' => '', 'type' => 'file'];
             }
             $model->files()->sync($mapped);
         }

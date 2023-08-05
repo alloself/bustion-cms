@@ -1,76 +1,21 @@
 <template>
-  <v-card
-    variant="tonal"
-    flat
-    :loading="loading"
-    :prepend-icon="module.icon"
-    class="mb-8"
-  >
+  <v-card variant="tonal" flat :loading="loading" :prepend-icon="module.icon" class="mb-8">
     <template #title>
       <span class="ml-2">
         {{ module.title }}
       </span>
     </template>
-    <v-data-table
-      v-model="selected"
-      show-select
-      :headers="headers"
-      :items="items"
-      :itemsPerPage="items.length"
-      :items-length="items.length"
-      :loading="loading"
-      @click:row="rowClick"
-    >
-      <template #bottom>
-        <div></div>
-      </template>
-      <template #[`item.actions`]="{ item }">
-        <div style="margin-left: -12px">
-          <v-btn
-            icon
-            large
-            :loading="loading"
-            flat
-            @click.stop="changeOrder(item.raw.id, Number(item.raw.order) + 1)"
-          >
-            <v-icon>mdi-arrow-up-bold-circle-outline</v-icon>
-          </v-btn>
-          <v-btn
-            icon
-            large
-            :loading="loading"
-            flat
-            @click.stop="changeOrder(item.raw.id, Number(item.raw.order) - 1)"
-          >
-            <v-icon>mdi-arrow-down-bold-circle-outline</v-icon>
-          </v-btn>
-        </div>
-      </template>
-    </v-data-table>
+    <tree-view v-model="selected" :items="items" @item:click="rowClick" :item-title="itemTitle"></tree-view>
     <teleport to="#rightDrawer" v-if="showBlockModal">
-      <module-detail
-        :key="`${props.module}-${selectedRow}`"
-        :module="props.module"
-        modal
-        :id="selectedRow"
-        v-bind="{ ...$attrs, predefinedValues }"
-        class="relation-modal"
-        @on-close="onModalClose"
-        @on-create="onModalCreate"
-      ></module-detail>
+      <module-detail :key="`${props.module}-${selectedRow}`" :module="props.module" modal :id="selectedRow"
+        v-bind="{ ...$attrs, predefinedValues }" class="relation-modal" @on-close="onModalClose"
+        @on-create="onModalCreate"></module-detail>
     </teleport>
     <v-divider></v-divider>
     <v-card-actions>
       <v-tooltip location="top" text="Создать" color="primary">
         <template #activator="{ props }">
-          <v-btn
-            icon
-            large
-            v-bind="props"
-            :loading="loading"
-            flat
-            @click="openModal"
-          >
+          <v-btn icon large v-bind="props" :loading="loading" flat @click="openModal">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </template>
@@ -78,36 +23,18 @@
       </v-tooltip>
       <v-tooltip location="top" text="Удалить выбранное" color="primary">
         <template #activator="{ props }">
-          <v-btn
-            icon
-            large
-            :loading="loading"
-            v-bind="props"
-            flat
-            @click="removeRelations"
-          >
+          <v-btn icon large :loading="loading" v-bind="props" flat @click="removeRelations">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </template>
         <span>Удалить выбранное</span>
       </v-tooltip>
-      <v-menu
-        v-model="showSearch"
-        :close-on-content-click="false"
-        location="right"
-        offset="16"
-      >
+      <v-menu v-model="showSearch" :close-on-content-click="false" location="right" offset="16">
         <template v-slot:activator="menu">
           <v-tooltip location="top" text="Поиск" color="primary">
             <template #activator="tooltip">
-              <v-btn
-                icon
-                large
-                v-bind="{ ...tooltip.props, ...menu.props }"
-                :loading="loading"
-                flat
-                @click="showSearch = true"
-              >
+              <v-btn icon large v-bind="{ ...tooltip.props, ...menu.props }" :loading="loading" flat
+                @click="showSearch = true">
                 <v-icon>mdi-magnify</v-icon>
               </v-btn>
             </template>
@@ -120,16 +47,8 @@
           <v-card-text class="mt-2">
             <v-row>
               <v-col>
-                <v-autocomplete
-                  placeholder="Поиск"
-                  v-model="searchedModelValue"
-                  item-title="name"
-                  return-object
-                  chips
-                  v-model:search="search"
-                  :items="searchedItems"
-                  multiple
-                ></v-autocomplete>
+                <v-autocomplete placeholder="Поиск" v-model="searchedModelValue" item-title="name" return-object chips
+                  v-model:search="search" :items="searchedItems" multiple></v-autocomplete>
               </v-col>
             </v-row>
           </v-card-text>
@@ -138,12 +57,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn
-              variant="text"
-              @click="
-                (showSearch = false), ((searchedModelValue = []), (search = ''))
-              "
-            >
+            <v-btn variant="text" @click="
+              (showSearch = false), ((searchedModelValue = []), (search = ''))
+              ">
               Отмена
             </v-btn>
             <v-btn color="primary" variant="text" @click="addSearchedItems">
@@ -157,9 +73,9 @@
   </v-card>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup generic="T">
 import { client } from "@/plugins/axios";
-import { DataTableHeader, useModuleStore } from "@/stores/module";
+import { useModuleStore } from "@/stores/module";
 import { orderBy } from "lodash";
 import {
   ref,
@@ -167,12 +83,16 @@ import {
   inject,
   defineAsyncComponent,
   onBeforeUnmount,
-  watch
+  watch,
+  provide,
 } from "vue";
-
 
 const ModuleDetail = defineAsyncComponent(
   () => import("@/components/ModuleDetail.vue")
+);
+
+const TreeView = defineAsyncComponent(
+  () => import("@/components/TreeView.vue")
 );
 
 interface Props {
@@ -181,6 +101,7 @@ interface Props {
   relationKey: string;
   showActions?: boolean;
   predefinedValues: Record<string, unknown>;
+  itemTitle?: string;
 }
 
 const moduleStore = useModuleStore();
@@ -197,6 +118,7 @@ const selectedRow = ref();
 const props = withDefaults(defineProps<Props>(), {
   modelValue: () => [],
   showActions: false,
+  itemTitle: "name",
 });
 
 const emits = defineEmits(["update:model-value"]);
@@ -211,19 +133,14 @@ const module = computed(() => moduleStore.modules[props.module]);
 
 const headers = computed(() => {
   if (!props.showActions) {
-    return module.value.headers || ([] as DataTableHeader[]);
+    return module.value.headers;
   }
 
   const actionsHeader = {
     key: "actions",
     title: "Действия",
   };
-
-  const value = module.value.headers
-    ? [...module.value.headers, actionsHeader]
-    : [] as DataTableHeader[]
-
-  return value;
+  return module.value.headers ? [...module.value.headers, actionsHeader] : [];
 });
 
 const openModal = () => {
@@ -231,9 +148,10 @@ const openModal = () => {
   rightDrawer.value = true;
 };
 
-const rowClick = (event: any, { item: { value } }: any) => {
-  if (!(event.target instanceof HTMLInputElement)) {
-    selectedRow.value = value;
+const rowClick = (event: Event, item: any) => {
+  const target = event.target as HTMLElement;
+  if (target.tagName === "DIV") {
+    selectedRow.value = item.id;
     openModal();
   }
 };
@@ -279,12 +197,14 @@ const removeRelations = () => {
   });
 };
 
-const changeOrder = async (id: string, order: number) => {
+const changeOrder = async (item: Record<string, any>, order: number) => {
   loading.value = true;
   try {
-    const { data } = await client.patch(`/api/cms/${module.value.key}/${id}`, {
+    const { data } = await client.patch(`/api/cms/${module.value.key}/${item.id}`, {
       order: order,
     });
+
+    item.order = data.order
 
     const index = props.modelValue.findIndex((item) => item.id === data.id);
 
@@ -348,6 +268,9 @@ watch(
 onBeforeUnmount(() => {
   onModalClose();
 });
+
+provide('changeOrder', changeOrder)
+
 </script>
 <style lang="scss">
 .v-data-table__tr {

@@ -1,6 +1,6 @@
 <template>
   <v-autocomplete
-    :model-value="modelValue"
+    :model-value="loading? null : modelValue"
     v-model:search="search"
     @update:model-value="onUpdateModalValue"
     v-bind="$attrs"

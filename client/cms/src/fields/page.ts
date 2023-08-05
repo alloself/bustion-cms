@@ -3,6 +3,7 @@ import { ref, Ref, markRaw } from "vue";
 import * as yup from "yup";
 import RelationFieldAutocomplete from "@/components/RelationFieldAutocomplete.vue";
 import RelationsTable from "@/components/RelationsTable.vue";
+import RelationsTree from "@/components/RelationsTree.vue";
 import EntityFieldJSONEditor from "@/components/EntityFieldJSONEditor.vue";
 
 export default function (options?: {
@@ -135,7 +136,7 @@ export default function (options?: {
 
   if (options?.entity?.id) {
     fields.value.push({
-      component: markRaw(RelationsTable),
+     component: markRaw(RelationsTree),
       key: "blocks",
       props: {
         predefinedValues: { page_id: options.entity.id },
@@ -145,9 +146,10 @@ export default function (options?: {
       },
     });
     fields.value.push({
-      component: markRaw(RelationsTable),
+      component: markRaw(RelationsTree),
       key: "children",
       props: {
+        itemTitle: "title",
         predefinedValues: { parent_id: options.entity.id },
         relationKey: "parent_id",
         module: "page",

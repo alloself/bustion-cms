@@ -36,6 +36,25 @@ class FileController extends Controller
         return $file;
     }
 
+    public static function create($file)
+    {
+        $name = $file->getClientOriginalName();
+        $path = $file->storeAs('public/files', uniqid() . "." . $file->getClientOriginalExtension());
+
+        $optimizerChain = OptimizerChainFactory::create();
+        $optimizerChain->optimize($path);
+
+        $file = File::create([
+            'path' => $path,
+            'name' => $name,
+            'extension' => $file->getClientOriginalExtension(),
+        ]);
+
+        return $file;
+    }
+
+
+
     public static function deleteUnused(Request $request)
     {
         $files =  File::doesntHave('blocks')->get();

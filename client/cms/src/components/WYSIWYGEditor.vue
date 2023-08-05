@@ -63,7 +63,7 @@
 <script setup lang="ts">
 import { useEditor, EditorContent, type Content } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
-import { onBeforeMount, ref, watch } from "vue";
+import { onBeforeUnmount, onMounted, ref, watch } from "vue";
 import Link from "@tiptap/extension-link";
 
 const props = defineProps<{ modelValue?: Content }>();
@@ -73,7 +73,6 @@ const showLink = ref(false);
 const link = ref("");
 
 const editor = useEditor({
-  content: props.modelValue,
   extensions: [StarterKit, Link],
   onUpdate: ({ editor }) => {
     emits("update:model-value", editor.getHTML());
@@ -166,8 +165,14 @@ const addLink = () => {
   link.value = "";
 };
 
-onBeforeMount(() => {
+onBeforeUnmount(() => {
   editor.value?.destroy();
+});
+
+onMounted(() => {
+  if (props.modelValue) {
+    editor.value?.commands.insertContent(props.modelValue);
+  }
 });
 
 watch(
