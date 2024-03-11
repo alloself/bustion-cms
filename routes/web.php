@@ -15,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::redirect('/', '/' . env('APP_DEFAULT_LANGUAGE'));
 Route::get('/admin{any}', [PageController::class, 'admin'])->where('any', '.*')->name('admin');
-Route::get('/{path?}', [PageController::class, 'site'])->where('path', '.*')->name('site');
+Route::prefix('{language}')->get('/{path?}', [PageController::class, 'web'])->where('path', '.*')->name('web');

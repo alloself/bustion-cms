@@ -26,11 +26,6 @@ class PageController extends Controller
         return view('admin');
     }
 
-    public function site()
-    {
-        return view('site');
-    }
-
     public function renderTree(Collection $array, $globalVariables = [])
     {
         $tree = array();
