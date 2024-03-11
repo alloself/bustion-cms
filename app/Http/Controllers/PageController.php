@@ -60,7 +60,7 @@ class PageController extends Controller
         })->with('blocks.descendants')->first();
 
         if (!$page && $path !== '/404') {
-            return redirect(App::getLocale() . '/404');
+           //return redirect(App::getLocale() . '/404');
         }
         if (!count($page->blocks)) {
             $page->blocks = new Collection();
