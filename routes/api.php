@@ -52,8 +52,3 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'api', 'role:root'])->group(
         Route::post('product', [ProductController::class, 'deleteMany']);
     });
 });
-
-Route::prefix('site')->group(function () {
-    Route::get('/category', [CategoryController::class, 'nomenclature']);
-    Route::get('/meal', [ProductController::class, 'nomenclature']);
-});
