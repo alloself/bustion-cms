@@ -1,0 +1,1 @@
+import{M as e}from"./ModuleDetail.js";import{l as o,V as t,Q as r}from"./vue-codemirror.js";import"./index.js";import"./lodash.js";import"./SmartForm.vue_vue_type_script_setup_true_lang.js";import"./index.esm.js";import"./VSpacer.js";const f=o({__name:"Detail",setup(m){return(p,a)=>(t(),r(e,{moduleKey:"menuItem"}))}});export{f as default};

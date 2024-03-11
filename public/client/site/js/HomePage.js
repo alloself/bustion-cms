@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper.js";import{V as o}from"./VImg.js";import{o as c,c as r}from"./vuetify.js";const t="/client/site/images/home-161898bc.png",s={};function m(n,a){return c(),r(o,{src:t,height:"100%",cover:""})}const p=e(s,[["render",m]]);export{p as default};

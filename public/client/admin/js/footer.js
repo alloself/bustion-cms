@@ -1,0 +1,1 @@
+import{r as t}from"./vue-codemirror.js";const e="footer",s="Подвалы сайта",r="mdi-page-layout-footer",n=t([{title:"Заголовок",key:"name"}]),a=!1;export{n as headers,r as icon,e as key,a as list,s as title};

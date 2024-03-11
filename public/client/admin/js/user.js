@@ -1,0 +1,1 @@
+import{r as o}from"./vue-codemirror.js";const r="user",s="Пользователи",l="mdi-account-group",n=o([{title:"Имя",key:"name"},{title:"Email",key:"email"},{title:"Роль",key:"roles",value:e=>e.roles.map(t=>t.name).join(",")}]),a=!0;export{n as headers,l as icon,r as key,a as list,s as title};

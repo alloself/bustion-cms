@@ -1,0 +1,1 @@
+import{a as e}from"./index.esm.js";import{r as t}from"./vue-codemirror.js";import"./lodash.js";function m(){return t([{component:"v-text-field",key:"name",props:{autocomplete:"name",label:"Название",name:"title",type:"text"},rule:e().required()}]).value}export{m as default};

@@ -1,0 +1,1 @@
+import{M as o}from"./ModuleDetail.js";import{l as t,V as e,Q as r}from"./vue-codemirror.js";import"./index.js";import"./lodash.js";import"./SmartForm.vue_vue_type_script_setup_true_lang.js";import"./index.esm.js";import"./VSpacer.js";const d=t({__name:"Detail",setup(p){return(m,a)=>(e(),r(o,{moduleKey:"product"}))}});export{d as default};

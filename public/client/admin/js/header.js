@@ -1,0 +1,1 @@
+import{r as e}from"./vue-codemirror.js";const o="header",s="Шапки сайта",a="mdi-page-layout-header",r=e([{title:"Заголовок",key:"name"}]),n=!1;export{r as headers,a as icon,o as key,n as list,s as title};

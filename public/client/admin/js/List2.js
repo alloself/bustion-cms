@@ -1,0 +1,1 @@
+import{_ as o}from"./ModuleList.vue_vue_type_style_index_0_lang.js";import{l as t,V as e,Q as r}from"./vue-codemirror.js";import"./index.js";import"./lodash.js";import"./VTooltip.js";import"./VSpacer.js";const l=t({__name:"List",setup(m){return(p,a)=>(e(),r(o,{"module-key":"footer"}))}});export{l as default};

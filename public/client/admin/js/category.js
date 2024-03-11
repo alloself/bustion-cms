@@ -1,0 +1,1 @@
+import{r as t}from"./vue-codemirror.js";const o="category",r="Категории",i="mdi-file",s=t([{title:"Заголовок",key:"title"},{title:"Приоритет",key:"order"}]),c=!0;export{s as headers,i as icon,o as key,c as list,r as title};
