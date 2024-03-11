@@ -42,13 +42,5 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'api', 'role:root'])->group(
     Route::apiResource('block', BlockController::class);
     Route::apiResource('user', UserController::class);
     Route::apiResource('role', RoleController::class);
-    Route::apiResource('product', ProductController::class);
     Route::apiResource('attribute', AttributeController::class);
-    Route::apiResource('category', CategoryController::class);
-
-
-    Route::prefix('destroy')->group(function () {
-        Route::post('category', [CategoryController::class, 'deleteMany']);
-        Route::post('product', [ProductController::class, 'deleteMany']);
-    });
 });
