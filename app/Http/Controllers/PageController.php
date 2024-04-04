@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Language;
+use App\Models\Link;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Traits\ModuleTrait;
@@ -55,9 +56,14 @@ class PageController extends Controller
 
         $languages = Language::all();
         $path = array_key_exists('path', $request->route()->parameters) ? '/' . $request->route()->parameters['path'] : '/';
-        $page = Page::wherePath($path)->whereHas('language', function (Builder $query) {
+        
+
+        $link = Link::wherePath($path)->with('linkable.blocks.descendants')->first();
+
+        $page = $link->linkable;
+        /*Page::wherePath($path)->whereHas('language', function (Builder $query) {
             $query->where('key', App::getLocale());
-        })->with('blocks.descendants')->first();
+        })->with('blocks.descendants')->first();*/
 
         if (!$page && $path !== '/404') {
            //return redirect(App::getLocale() . '/404');

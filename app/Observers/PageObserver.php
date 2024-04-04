@@ -15,7 +15,7 @@ class PageObserver
      */
     public function creating(Page $page)
     {
-      
+        $page->link->generatePath();
     }
 
     /**
@@ -35,6 +35,8 @@ class PageObserver
      */
     public function updated(Page $page)
     {
+
+        $page->link->generatePath();
         /*if ($page->hasChildren()) {
             $page->load('descendants');
             foreach ($page->descendants as $key => $descendant) {
