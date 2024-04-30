@@ -16,7 +16,7 @@
   <script type="module" crossorigin src="/client/admin/js/index.js"></script>
   <link rel="modulepreload" crossorigin href="/client/admin/js/vue-codemirror.js">
   <link rel="modulepreload" crossorigin href="/client/admin/js/lodash.js">
-  <link rel="stylesheet" crossorigin href="/client/admin/css/index-DAiuhRQw.css">
+  <link rel="stylesheet" crossorigin href="/client/admin/css/index-CpPq8n0L.css">
 </head>
 
 <body>
