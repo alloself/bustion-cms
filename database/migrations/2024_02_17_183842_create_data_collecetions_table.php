@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('data_collecetions', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
             $table->json('meta')->nullable();
             $table->unsignedInteger('_lft')->default(0);
             $table->unsignedInteger('_rgt')->default(0);

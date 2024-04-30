@@ -36,11 +36,9 @@ trait ModuleTrait
 
         $model = $this->model()::create($values);
 
-
-        if (array_key_exists('link',$values) && method_exists($model, 'link') && $model->link() instanceof MorphOne) {
+        if (array_key_exists('link', $values) && method_exists($model, 'link') && $model->link() instanceof MorphOne) {
             $link = new Link($values['link']);
-            $link->generatePath();
-            $model->link()->save($link);
+            $model->link()->save($link);;
         }
 
 
@@ -87,8 +85,7 @@ trait ModuleTrait
         if ($model->files) {
             $model->load('files');
         }
-        if($model->link)
-        {
+        if ($model->link) {
             $model->load('link');
         }
 
@@ -131,7 +128,7 @@ trait ModuleTrait
 
 
         $values = $request->all();
-        
+
 
 
         $model = $this->model()::findOrFail($id);
@@ -139,15 +136,15 @@ trait ModuleTrait
 
         $model->update($values);
 
-        
-        if (array_key_exists('link',$values) && method_exists($model, 'link') && $model->link() instanceof MorphOne) {
+
+        if (array_key_exists('link', $values) && method_exists($model, 'link') && $model->link() instanceof MorphOne) {
             $link = Link::findOrFail($values['link']['id']);
             $link->update(['title' => $values['link']['title'], 'subtitle' => $values['link']['subtitle']]);
-            $model->load('link');      
+            $model->load('link');
         }
 
-        
-      
+
+
         if ($request->has('images')) {
             if (count($values['images']) === 0) {
                 $model->images()->sync([]);
@@ -189,8 +186,7 @@ trait ModuleTrait
         if ($model->files) {
             $model->load('files');
         }
-        if($model->link)
-        {
+        if ($model->link) {
             $model->load('link');
         }
 

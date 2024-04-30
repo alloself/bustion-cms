@@ -15,7 +15,7 @@ class PageObserver
      */
     public function creating(Page $page)
     {
-        $page->link->generatePath();
+        //$page->link->generatePath();
     }
 
     /**

@@ -37,9 +37,7 @@ class Link extends Model
                 $this->path = '/';
             }
         }
-
-
-
+        $this->saveQuietly();
         return $this;
     }
 
