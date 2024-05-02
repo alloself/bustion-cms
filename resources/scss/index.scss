@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
+
+// base
+@import '@/resources/scss/base/fonts';
+@import '@/resources/scss/base/defaults';
+@import '@/resources/scss/base/typography';
+@import '@/resources/scss/base/animates';
+
+// elements
+@import '@/resources/scss/elements/button';
+@import '@/resources/scss/elements/toasts';
+@import '@/resources/scss/elements/tooltips';
+@import '@/resources/scss/elements/decor-link';
+@import '@/resources/scss/elements/forms';
+@import '@/resources/scss/elements/svg-icon';
+@import '@/resources/scss/elements/rounded-icon';
+@import '@/resources/scss/elements/badge';
+@import '@/resources/scss/elements/app-logo';
+@import '@/resources/scss/elements/slider-controls';
+@import '@/resources/scss/elements/pagination';
+@import '@/resources/scss/elements/floating-block';
+@import '@/resources/scss/elements/lamps';
+@import '@/resources/scss/elements/yandex-map';
+
+// utilities
 @tailwind utilities;
