@@ -1,6 +1,6 @@
 import { ThreeLampScene } from '@/resources/ts/scripts/threeLampScene'
 
-export function initThreeObjects() {
+export async function initThreeObjects() {
     function getElementOffsetTop(selector: string) {
         let offset = 0
         let element = document.querySelector(selector)

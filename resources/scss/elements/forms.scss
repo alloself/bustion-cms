@@ -1,14 +1,11 @@
 .app-checkmark {
-    @apply 
-        flex-none
+    @apply flex-none
         w-4
         h-4
-        relative
-    ;
+        relative;
 
     .svg-icon {
-        @apply
-            cursor-pointer
+        @apply cursor-pointer
             text-brand
             w-full
             h-full
@@ -19,23 +16,19 @@
             duration-300
             border
             outline-none
-            border-neutral
-        ;
+            border-neutral;
 
         svg {
-            @apply 
-                w-[70%]
+            @apply w-[70%]
                 h-[70%]
                 transition-all
                 scale-0
-                opacity-0
-            ;
+                opacity-0;
         }
     }
 
     input {
-        @apply 
-            cursor-pointer
+        @apply cursor-pointer
             outline-none
             w-full
             h-full
@@ -47,16 +40,13 @@
             right-0
             top-0
             bottom-0
-            opacity-0
-        ;
+            opacity-0;
 
         &:checked ~ .svg-icon svg {
-            @apply 
-                scale-100 
+            @apply scale-100 
                 opacity-100
                 pointer-events-none
-                cursor-crosshair
-            ;
+                cursor-crosshair;
         }
 
         &:checked ~ .svg-icon,
@@ -66,35 +56,27 @@
         }
 
         &:disabled {
-            @apply 
-                pointer-events-none
-            ;
+            @apply pointer-events-none;
         }
 
         &:disabled ~ .svg-icon {
-            @apply 
-                opacity-50 
-                pointer-events-none
-            ;
+            @apply opacity-50 
+                pointer-events-none;
         }
     }
 
-    input[type="radio"] ~ .svg-icon {
-        @apply 
-            rounded-full
-        ;
+    input[type='radio'] ~ .svg-icon {
+        @apply rounded-full;
 
         svg {
-            @apply 
-                w-2.5
-                h-2.5
-            ;
+            @apply w-2.5
+                h-2.5;
         }
     }
 }
 
 .app-form-control {
-    @apply 
+    @apply appearance-none
         py-2
         outline-none
         bg-transparent
@@ -113,12 +95,9 @@
         placeholder:text-opacity-50
         transition-[border,box-shadow]
         duration-300
-        focus:border-brand
-    ;
+        focus:border-brand;
 
     &.is-error {
-        @apply 
-            border-red-400
-        ;
+        @apply border-red-400;
     }
 }

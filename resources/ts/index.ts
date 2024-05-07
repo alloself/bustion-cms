@@ -31,11 +31,11 @@ import Accordion from '@/resources/ts/components/common/Accordion.vue'
 import AppTabs from '@/resources/ts/components/common/AppTabs.vue'
 import Pagination from '@/resources/ts/components/common/Pagination.vue'
 import AppSort from '@/resources/ts/components/common/AppSort.vue'
+import CatalogFilter from '@/resources/ts/components/common/CatalogFilter.vue'
 import AppSelect from '@/resources/ts/components/common/AppSelect.vue'
 import MobileMenuBurger from '@/resources/ts/components/common/MobileMenuBurger.vue'
 import MobileFiltersBurger from '@/resources/ts/components/common/MobileFiltersBurger.vue'
 import CountButtons from '@/resources/ts/components/common/CountButtons.vue'
-import OrderDetails from '@/resources/ts/components/common/OrderDetails.vue'
 import Offcanvas from '@/resources/ts/components/common/Offcanvas.vue'
 import OffcanvasClose from '@/resources/ts/components/common/OffcanvasClose.vue'
 import AppModal from '@/resources/ts/components/common/AppModal.vue'
@@ -47,6 +47,7 @@ import OrderForm from '@/resources/ts/components/forms/OrderForm.vue'
 import PersonalDataForm from '@/resources/ts/components/forms/PersonalDataForm.vue'
 import PersonalPasswordForm from '@/resources/ts/components/forms/PersonalPasswordForm.vue'
 import CallbackForm from '@/resources/ts/components/forms/CallbackForm.vue'
+// import OrderDetails from '@/resources/ts/components/common/OrderDetails.vue'
 
 createApp()
     .directive('scroll-to', ScrollToDirective)
@@ -69,6 +70,7 @@ createApp()
     .component('pagination', Pagination)
     .component('appsort', AppSort)
     .component('appselect', AppSelect)
+    .component('catalogfilter', CatalogFilter)
     .component('mobilefiltersburger', MobileFiltersBurger)
     .component('mobilemenuburger', MobileMenuBurger)
     .component('offcanvas', Offcanvas)
@@ -78,15 +80,15 @@ createApp()
     .mount('#app')
 
 document.addEventListener('DOMContentLoaded', () => {
-    // initArticlesItemSlider()
-    // initProductItemSlider()
-    // initMainBannersSlider()
-    // initSlideShow()
-    // initTapeSlider()
+    initArticlesItemSlider()
+    initProductItemSlider()
+    initMainBannersSlider()
+    initSlideShow()
+    initTapeSlider()
 })
 
 window.onload = () => {
-    // initScrollAnimate()
-    // initContactsMap()
+    initScrollAnimate()
+    initContactsMap()
     initThreeObjects()
 }

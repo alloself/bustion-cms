@@ -4,7 +4,7 @@
             <div
                 class="flex items-center font-semibold justify-between mb-2 pb-2 border-b border-neutral border-opacity-50"
             >
-                <GeoLocation></GeoLocation>
+                <geolocation></geolocation>
                 <div
                     class="flex gap-1 font-semibold text-[14px] leading-[1.1] text-dark text-opacity-40"
                 >
@@ -13,9 +13,7 @@
                     <div>{{ allPickUpPointsLength }}</div>
                 </div>
             </div>
-            <div
-                class="overflow-y-auto pr-2 max-h-[215px] md:max-h-[242px] xl:max-h-[440px]"
-            >
+            <div class="overflow-y-auto pr-2 max-h-[215px] md:max-h-[242px] xl:max-h-[440px]">
                 <div
                     v-for="(point, pointIndex) in currentLocation.pickUpPoints"
                     :key="pointIndex"
@@ -36,60 +34,54 @@
             </div>
         </div>
         <div class="lg:flex-1 lg:min-w-0">
-            <div
-                id="pickup-points-map"
-                style="height: 480px; width: 100%"
-            ></div>
+            <div id="pickup-points-map" style="height: 480px; width: 100%"></div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { onMounted, watch } from 'vue'
 import {
     IPickUpPoint,
     allPickUpPointsLength,
     currentLocation,
     currentPickUpPoint,
-} from "@/resources/ts/composables/useGeoLocation";
-import { toast } from "@/resources/ts/composables/useToast";
-import { modalClose } from "@/resources/ts/composables/useModal";
+} from '@/resources/ts/composables/useGeoLocation'
+import { toast } from '@/resources/ts/composables/useToast'
+import { modalClose } from '@/resources/ts/composables/useModal'
 
 const props = withDefaults(
     defineProps<{
-        showMessage?: boolean;
-        selectPickUpPoint?: boolean;
+        showMessage?: boolean
+        selectPickUpPoint?: boolean
     }>(),
     {
         showMessage: true,
         selectPickUpPoint: false,
     }
-);
+)
 
-let map: Record<any, any> = {};
+let map: Record<any, any> = {}
 
 watch(currentLocation, () => {
-    addMapMarkersByLocation();
-});
+    addMapMarkersByLocation()
+})
 
 function addMapMarkersByLocation() {
     if (!map.constructor?.name) {
-        return;
+        return
     }
 
-    map.geoObjects.removeAll();
+    map.geoObjects.removeAll()
 
     if (currentLocation.value.pickUpPoints.length === 0 && props.showMessage) {
-        toast.show(
-            "error",
-            `В городе ${currentLocation.value.city} не найдено пунктов выдачи`
-        );
+        toast.show('error', `В городе ${currentLocation.value.city} не найдено пунктов выдачи`)
     }
 
     map.setCenter(currentLocation.value.latlng, 10, {
         duration: 400,
         checkZoomRange: true,
-    });
+    })
 
     currentLocation.value.pickUpPoints?.forEach((point) => {
         const markerPoint = new ymaps.Placemark(
@@ -97,27 +89,27 @@ function addMapMarkersByLocation() {
             {
                 balloonContent: `
                 <div class="font-base font-semibold text-[14px] ${
-                    props.selectPickUpPoint ? "cursor-pointer" : ""
+                    props.selectPickUpPoint ? 'cursor-pointer' : ''
                 }">
                     <div class="mb-2.5">${point.address}</div>
                     ${
                         props.selectPickUpPoint
                             ? `<div class="inline-block underline text-brand js-select-point">Выбрать пункт</div>`
-                            : ""
+                            : ''
                     }
                 </div>
             `,
-                iconCaption: "",
+                iconCaption: '',
             },
             {
-                iconLayout: "default#imageWithContent",
+                iconLayout: 'default#imageWithContent',
                 iconImageOffset: [-15, -15],
-                iconImageHref: "img/geo-marker.svg",
+                iconImageHref: '/public/img/geo-marker.svg',
                 iconImageSize: [30, 30],
                 balloonCloseButton: false,
                 hideIconOnBalloonOpen: false,
             }
-        );
+        )
 
         // markerPoint.events.add(['click'], function(event: any) {
         //     map.setCenter(point.latlng, 16, {
@@ -126,56 +118,52 @@ function addMapMarkersByLocation() {
         //     })
         // })
 
-        markerPoint.balloon.events.add(["click"], function (event: any) {
+        markerPoint.balloon.events.add(['click'], function (event: any) {
             try {
                 if (
                     event.originalEvent.target.properties._data.balloonContent.includes(
-                        "js-select-point"
+                        'js-select-point'
                     )
                 ) {
-                    currentPickUpPoint.value = point;
-                    modalClose("pickUpPointsModal");
-                    toast.show(
-                        "success",
-                        `Выбран пункт самовывоза - ${point.address}`,
-                        {
-                            duration: 10000,
-                        }
-                    );
+                    currentPickUpPoint.value = point
+                    modalClose('pickUpPointsModal')
+                    toast.show('success', `Выбран пункт самовывоза - ${point.address}`, {
+                        duration: 10000,
+                    })
                 }
             } catch (error) {
-                console.log(error);
+                console.log(error)
             }
-        });
+        })
 
-        map.geoObjects.add(markerPoint);
-    });
+        map.geoObjects.add(markerPoint)
+    })
 
     if (map.geoObjects.getBounds()) {
-        map.setBounds(map.geoObjects.getBounds());
+        map.setBounds(map.geoObjects.getBounds())
     }
 }
 
 function onPointClick(point: IPickUpPoint) {
     if (!map.constructor?.name) {
-        return;
+        return
     }
 
     map.setCenter(point.latlng, 16, {
         duration: 400,
         checkZoomRange: true,
-    });
+    })
 }
 
 onMounted(() => {
     ymaps.ready(() => {
-        map = new ymaps.Map("pickup-points-map", {
+        map = new ymaps.Map('pickup-points-map', {
             center: currentLocation.value.latlng,
             zoom: 10,
             controls: [],
-        });
+        })
 
-        addMapMarkersByLocation();
-    });
-});
+        addMapMarkersByLocation()
+    })
+})
 </script>

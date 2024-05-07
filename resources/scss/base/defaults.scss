@@ -4,12 +4,10 @@ html {
 }
 
 body {
-    @apply 
-        relative 
+    @apply relative 
         min-h-[100vh]
         min-w-[320px]
-        text-[16px]
-    ;
+        text-[16px];
 
     &.is-modal-open,
     &.is-offcanvas-open {
@@ -30,33 +28,25 @@ body {
 }
 
 a:not(a[class]) {
-    @apply
-        text-brand
+    @apply text-brand
         hover:text-brand
-        hover:underline
-    ;
+        hover:underline;
 }
 
 .app-wrapper {
-    @apply 
-        flex
+    @apply flex
         flex-col
-        min-h-[inherit]
-    ;
+        min-h-[inherit];
 }
 
 ::selection {
-    @apply 
-        text-white
-        bg-brand
-    ;
+    @apply text-white
+        bg-brand;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    @apply 
-        w-2.5
-    ;
+    @apply w-2.5;
 }
 
 /* Track */
@@ -66,16 +56,19 @@ a:not(a[class]) {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    @apply 
-        rounded-sm
+    @apply rounded-sm
         bg-dark 
-        bg-opacity-40
-    ;
+        bg-opacity-40;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    @apply 
-        bg-opacity-60
-    ;
+    @apply bg-opacity-60;
+}
+
+*:-webkit-autofill,
+*:-webkit-autofill:hover,
+*:-webkit-autofill:focus,
+*:-webkit-autofill:active {
+    background: transparent;
 }

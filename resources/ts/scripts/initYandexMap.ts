@@ -15,7 +15,7 @@ export async function initContactsMap() {
             {
                 iconLayout: 'default#imageWithContent',
                 iconImageOffset: [-15, -15],
-                iconImageHref: 'img/geo-marker.svg',
+                iconImageHref: '/public/img/geo-marker.svg',
                 iconImageSize: [30, 30],
             }
         )

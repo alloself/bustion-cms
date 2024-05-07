@@ -1,21 +1,21 @@
-<offcanvas name="mobileMenu">
+<offcanvas name="mobileMenu" v-cloak>
     <nav class="mb-8 w-[600px] max-w-full mx-auto">
         <ul class="text-[20px] leading-[1.1] flex flex-col">
             <li class="border-b border-neutral-alpha">
                 <a 
-                    href="/ru/catalog" 
+                    href="/ru/katalog" 
                     class="block py-2 font-semibold [&.is-active-link]:text-brand hover:text-brand"
                 >Каталог</a>
             </li>
             <li class="border-b border-neutral-alpha">
                 <a 
-                    href="/ru/about" 
+                    href="/ru/o-nas" 
                     class="block py-2 font-semibold [&.is-active-link]:text-brand hover:text-brand"
                 >О нас</a>
             </li>
             <li class="border-b border-neutral-alpha">
                 <a 
-                    href="/ru/articles" 
+                    href="/ru/novosti" 
                     class="block py-2 font-semibold [&.is-active-link]:text-brand hover:text-brand"
                 >Новости</a>
             </li>
