@@ -1,5 +1,5 @@
 import { useModuleStore } from "@/entities/module/store";
-import { capitalize, kebabize } from "@/shared/utils";
+import { camelize, capitalize, kebabize } from "@/shared/utils";
 import Authenticated from "@/app/layouts/Authenticated.vue";
 import { RouteRecordRaw } from "vue-router";
 import { IFormField, IGetFieldsOptions } from "@/shared/types";
@@ -20,12 +20,8 @@ export const getModuleRoutes = (key: string) => {
       layout: Authenticated,
     },
     name: `${capitalize(key)}List`,
-    component: () => import(`@/entities/${key}/components/List.vue`),
+    component: () => import(`@/entities/${camelize(key)}/components/List.vue`),
   } as RouteRecordRaw;
-
-  if (key === import.meta.env.VITE_APP_DEFAULT_ALIAS) {
-    rootList.alias = "";
-  }
 
   return [
     rootList,
@@ -35,7 +31,7 @@ export const getModuleRoutes = (key: string) => {
         layout: Authenticated,
       },
       name: `${capitalize(key)}Create`,
-      component: () => import(`@/entities/${key}/components/Detail.vue`),
+      component: () => import(`@/entities/${camelize(key)}/components/Detail.vue`),
     },
     {
       path: `/${key}/:id`,
@@ -43,7 +39,7 @@ export const getModuleRoutes = (key: string) => {
         layout: Authenticated,
       },
       name: `${capitalize(key)}Detail`,
-      component: () => import(`@/entities/${key}/components/Detail.vue`),
+      component: () => import(`@/entities/${camelize(key)}/components/Detail.vue`),
     },
   ] as RouteRecordRaw[];
 };

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->longText('content')->nullable();
             $table->bigInteger('order')->default(0);
             $table->uuid('template_id')->nullable();
-            $table->uuid('page_id')->nullable();
             $table->unsignedInteger('_lft')->default(0);
             $table->unsignedInteger('_rgt')->default(0);
             $table->uuid('parent_id')->nullable();
@@ -30,7 +29,6 @@ return new class extends Migration
             $table->softDeletes();
             
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
-            $table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade');
         });
     }
 

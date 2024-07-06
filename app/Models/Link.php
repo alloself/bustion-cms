@@ -14,7 +14,7 @@ class Link extends Model
 {
     use HasFactory, HasSlug, HasUuids;
 
-    protected $fillable = ['title', 'subtitle', 'slug', 'path', 'key'];
+    protected $fillable = ['title', 'subtitle', 'slug', 'path'];
 
     public function generatePath()
     {

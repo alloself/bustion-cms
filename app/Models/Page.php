@@ -14,6 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\Log;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
@@ -65,9 +66,9 @@ class Page extends Model
         return $this->morphOne(Link::class, 'linkable');
     }
 
-    public function blocks(): HasMany
+    public function blocks(): MorphToMany
     {
-        return $this->hasMany(Block::class);
+        return $this->morphToMany(Block::class, 'blockable')->withPivot('order');
     }
 
     public function template(): BelongsTo

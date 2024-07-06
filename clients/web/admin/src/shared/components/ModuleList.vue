@@ -79,7 +79,7 @@
 </template>
 
 <script lang="ts" setup generic="T extends IModuleItem">
-import { computed, ref, watch } from "vue";
+import { computed, onBeforeMount, onUpdated, ref, watch } from "vue";
 import { useLayout } from "vuetify";
 import { client } from "@/shared/api/axios";
 import { useModuleStore } from "@/entities/module/store";
@@ -97,10 +97,7 @@ const serverData = ref<IServerDataList & { data: T[] }>();
 const search = ref((route.query.search as string) || "");
 const selected = ref<string[]>([]);
 
-const options = ref({
-  page: Number(route.query.page) || 1,
-  itemsPerPage: Number(route.query.per_page) || 20,
-});
+const options = ref();
 
 const module = computed(() => moduleStore.modules[moduleKey]);
 
@@ -157,14 +154,35 @@ const deleteMany = async () => {
   }
 };
 
+onBeforeMount(() => {
+  options.value = {
+    page: Number(route.query.page) || 1,
+    itemsPerPage: Number(route.query.per_page) || 5,
+  };
+});
+
 watch(
   options,
-  (v) => {
-    getItems(v);
+  async (value) => {
+    await getItems(value);
   },
   {
     deep: true,
-    immediate: true,
+  }
+);
+
+watch(
+  () => route.query,
+  (v) => {
+    if (!Object.keys(v).length) {
+      options.value = {
+        page: Number(route.query.page) || 1,
+        itemsPerPage: Number(route.query.per_page) || 5,
+      };
+    }
+  },
+  {
+    deep: true,
   }
 );
 </script>

@@ -1,7 +1,7 @@
 
 
 <template>
-    <module-detail moduleKey="collection"></module-detail>
+    <module-detail moduleKey="data-collection"></module-detail>
 </template>
 
 <script setup lang="ts">

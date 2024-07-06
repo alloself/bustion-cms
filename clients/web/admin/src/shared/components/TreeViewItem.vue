@@ -23,6 +23,7 @@
               <v-btn icon="mdi-arrow-up-bold-circle-outline" size="small" variant="text"
                 @click="changeOrder(item, Number(item.order) + 1)">
               </v-btn>
+             
               <v-btn icon="mdi-arrow-down-bold-circle-outline" size="small" variant="text"
                 @click="changeOrder(item, Number(item.order) - 1)">
               </v-btn>
@@ -51,10 +52,11 @@
 
     <template #append>
       <v-list-item-action end>
-        <div style="margin-left: -12px">
+        <div class="d-flex items-center ga-2">
           <v-btn icon="mdi-arrow-up-bold-circle-outline" size="small" flat
             @click="changeOrder(item, Number(item.order) + 1)">
           </v-btn>
+          <v-text-field class="centered-input" :model-value="item.order" @update:model-value="(v) => changeOrder(item, Number(v))"  hide-details="auto" density="compact"> </v-text-field>
           <v-btn icon="mdi-arrow-down-bold-circle-outline" size="small" flat
             @click="changeOrder(item, Number(item.order) - 1)">
           </v-btn>
@@ -103,4 +105,8 @@ const getSorterdChildren = (items: ITreeItem[]) =>
     transform: rotate(-90deg);
   }
 }
+
+.centered-input input {
+      text-align: center
+    }
 </style>

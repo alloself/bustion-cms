@@ -46,4 +46,4 @@ export const kebabize = (str: string) =>
         ($, ofs) => (ofs ? "-" : "") + $.toLowerCase()
     );
 
-    
+export const camelize = (str: string) => str.replace(/-./g, x => x[1].toUpperCase())

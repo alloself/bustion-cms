@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Link;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -41,7 +42,16 @@ trait ModuleTrait
             $model->link()->save($link);;
         }
 
-
+        if ($request->has('blocks')) {
+            if (count($values['blocks']) === 0) {
+                $model->blocks()->sync([]);
+            } else {
+                foreach ($values['blocks'] as $key => $block) {
+                    $mapped[$block['id']] = ['order' => isset($block['pivot']['order']) ? $block['pivot']['order'] : 0];
+                }
+                $model->blocks()->sync($mapped);
+            }
+        }
 
 
         if ($request->has('images')) {
@@ -78,6 +88,9 @@ trait ModuleTrait
         }
         if ($model->attributes) {
             $model->load('attributes');
+        }
+        if ($model->blocks) {
+            $model->load('blocks');
         }
         if ($model->images) {
             $model->load('images');
@@ -143,6 +156,16 @@ trait ModuleTrait
             $model->load('link');
         }
 
+        if ($request->has('blocks')) {
+            if (count($values['blocks']) === 0) {
+                $model->blocks()->sync([]);
+            } else {
+                foreach ($values['blocks'] as $key => $block) {
+                    $mapped[$block['id']] = ['order' => isset($block['pivot']['order']) ? $block['pivot']['order'] : 0];
+                }
+                $model->blocks()->sync($mapped);
+            }
+        }
 
 
         if ($request->has('images')) {
@@ -179,6 +202,9 @@ trait ModuleTrait
 
         if ($model->attributes) {
             $model->load('attributes');
+        }
+        if ($model->blocks) {
+            $model->load('blocks');
         }
         if ($model->images) {
             $model->load('images');

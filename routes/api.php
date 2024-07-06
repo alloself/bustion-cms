@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\BlockController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DataCollecetionController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\HeaderController;
@@ -11,7 +11,6 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuItemController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
@@ -43,4 +42,5 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'api', 'role:root'])->group(
     Route::apiResource('user', UserController::class);
     Route::apiResource('role', RoleController::class);
     Route::apiResource('attribute', AttributeController::class);
+    Route::apiResource('data-collection', DataCollecetionController::class);
 });

@@ -4,25 +4,15 @@
       <v-layout>
         <router-view v-slot="{ Component, route }">
           <component :is="route.meta.layout">
-            <component :is="Component" :key="route.fullPath" />
+            <component :is="Component" :key="route.path" />
           </component>
         </router-view>
-        <v-snackbar
-          v-for="(notification, index) in notificationStore.notifications"
-          :key="index"
-          :color="notification.color"
-          position="sticky"
-          location="top right"
-          :model-value="true"
-          :style="getOffsetStyle(index)"
-        >
+        <v-snackbar v-for="(notification, index) in notificationStore.notifications" :key="index"
+          :color="notification.color" position="sticky" location="top right" :model-value="true"
+          :style="getOffsetStyle(index)">
           {{ notification.content }}
           <template v-slot:actions>
-            <v-btn
-              icon="mdi-close"
-              variant="text"
-              @click="notificationStore.closeAlert(index)"
-            >
+            <v-btn icon="mdi-close" variant="text" @click="notificationStore.closeAlert(index)">
             </v-btn>
           </template>
         </v-snackbar>

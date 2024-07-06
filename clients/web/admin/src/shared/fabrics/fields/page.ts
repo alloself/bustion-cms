@@ -111,11 +111,9 @@ export default function (options?: IOptionsFieldsFabric<IPage>) {
 
   if (options?.entity?.id) {
     fields.value.push({
-     component: markRaw(RelationsTree),
+      component: markRaw(RelationsTree),
       key: "blocks",
       props: {
-        initialValues: { page_id: options.entity.id },
-        relationKey: "page_id",
         moduleKey: "block",
         showActions: true,
       },
@@ -129,7 +127,7 @@ export default function (options?: IOptionsFieldsFabric<IPage>) {
         relationKey: "parent_id",
         moduleKey: "page",
       },
-      events:{
+      events: {
 
       }
     });

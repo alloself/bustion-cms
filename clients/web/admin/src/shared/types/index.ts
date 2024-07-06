@@ -134,8 +134,8 @@ export interface IGetFieldsOptions {
 export interface IRelationTreeProps<T> {
   modelValue: T[];
   moduleKey: string;
-  relationKey: keyof T;
-  initialValues: Record<keyof T, unknown>;
+  //relationKey?: keyof T;
+  initialValues?: Record<keyof T, unknown>;
   itemTitle?: string;
 }
 

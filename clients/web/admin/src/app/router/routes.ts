@@ -3,9 +3,12 @@ import { generateModulesRoutes } from '@/entities/module'
 import { RouteRecordRaw } from 'vue-router'
 
 
-
 export const routes = [
   ...generateModulesRoutes(import.meta.env.VITE_APP_MODULES.split(",")),
+  {
+    path: "/",
+    redirect: import.meta.env.VITE_APP_DEFAULT_ALIAS
+  },
   {
     path: "/login",
     name: "Login",

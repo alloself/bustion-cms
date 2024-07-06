@@ -1,6 +1,6 @@
 <template>
   <v-list density="compact" nav return-object>
-    <tree-view-item v-for="(item, index) in sortedItems" :key="index" :item="item"
+    <tree-view-item v-for="(item, index) in sortedItems" :key="`${index}-${item.order}`" :item="item"
       :item-title="itemTitle"></tree-view-item>
   </v-list>
 </template>

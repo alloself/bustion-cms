@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('headers', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
-
+            $table->softDeletes();
             $table->uuid('template_id')->nullable();
             $table->uuid('menu_id')->nullable();
             $table->timestamps();

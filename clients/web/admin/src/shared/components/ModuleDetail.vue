@@ -1,15 +1,30 @@
 <template>
-  <v-card outlined rounded="0" flat :max-height="`calc(100svh - ${mainRect.top}px)`"
-    class="h-100 d-flex flex-column overflow-auto w-100" :loading="loading">
+  <v-card
+    outlined
+    rounded="0"
+    flat
+    :max-height="`calc(100svh - ${mainRect.top}px)`"
+    class="h-100 d-flex flex-column overflow-auto w-100"
+    :loading="loading"
+  >
     <v-card-text>
-      <smart-form :fields="fields" :initialValues="initialValues" :loading="loading"></smart-form>
+      <smart-form
+        :fields="fields"
+        :initialValues="initialValues"
+        :loading="loading"
+      ></smart-form>
     </v-card-text>
     <v-spacer></v-spacer>
     <div class="actions-wrapper">
       <v-divider></v-divider>
       <v-card-actions>
-        <v-btn v-for="(action, index) in actions" :key="index" v-bind="action.props" @click="action.action">{{
-    action.title }}</v-btn>
+        <v-btn
+          v-for="(action, index) in actions"
+          :key="index"
+          v-bind="action.props"
+          @click="action.action"
+          >{{ action.title }}</v-btn
+        >
         <v-spacer></v-spacer>
         <v-btn @click="router.go(-1)" v-if="!modal">Назад</v-btn>
       </v-card-actions>
@@ -18,7 +33,7 @@
 </template>
 
 <script lang="ts" setup generic="T extends IModuleItem">
-import { computed, onMounted, provide, ref } from "vue";
+import { computed, onMounted, provide, ref, watch } from "vue";
 import { client } from "@/shared/api/axios";
 import { useModuleStore } from "@/entities/module/store";
 import { capitalize } from "lodash";
@@ -51,10 +66,10 @@ const emits = defineEmits<{
   onCreate: [value: T];
   onUpdate: [value: T];
   onClose: [];
-  onDelete: []
+  onDelete: [];
 }>();
 
-const onReset = () => { };
+const onReset = () => {};
 const onUpdate = async () => {
   const validateRezult = await form.value?.validate();
 
@@ -80,11 +95,9 @@ const onUpdate = async () => {
 const onDelete = async () => {
   try {
     loading.value = true;
-    await client.delete(
-      `/api/admin/${module.value.key}/${entityId.value}`
-    );
+    await client.delete(`/api/admin/${module.value.key}/${entityId.value}`);
 
-    router.push({ name: `${capitalize(module.value.key)}List` })
+    router.push({ name: `${capitalize(module.value.key)}List` });
 
     if (modal) {
       emits("onDelete");
@@ -187,6 +200,21 @@ const entityId = computed(() => (modal ? id : route.params.id));
 
 const module = computed(() => moduleStore.modules[moduleKey]);
 
+watch(
+  () => form.value?.values,
+  (v) => {
+    fields.value = module.value.getFields({
+      initialValues: initialValues,
+      entity: v,
+    });
+
+    localValues.value = { ...initialValues };
+  },
+  {
+    deep: true,
+  }
+);
+
 onMounted(async () => {
   if (entityId.value) {
     loading.value = true;
@@ -202,27 +230,19 @@ onMounted(async () => {
 
       localValues.value = { ...data, ...initialValues };
 
-
-      form.value?.resetForm({ values: localValues.value })
-
-
+      form.value?.resetForm({ values: localValues.value });
     } catch (e) {
       console.log(e);
     } finally {
       loading.value = false;
     }
   } else {
-
     fields.value = module.value.getFields({
       initialValues: initialValues,
     });
 
     localValues.value = { ...initialValues };
-
-
   }
-
-
 });
 
 provide("form", form);

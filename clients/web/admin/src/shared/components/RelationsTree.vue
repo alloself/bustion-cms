@@ -144,7 +144,7 @@ const selectedRow = ref();
 const {
   modelValue = [],
   moduleKey,
-  relationKey,
+  //relationKey = {},
   initialValues,
   itemTitle = "name",
 } = defineProps<IRelationTreeProps<T>>();
@@ -222,12 +222,10 @@ const onUpdateModalValue = (value: Record<string, unknown> | string) => {
 };
 
 const removeRelations = () => {
-
-  console.log(selected)
   selected.value.forEach(async (item) => {
-    await client.patch(`/api/admin/${module.value.key}/${item.id}`, {
+    /*await client.patch(`/api/admin/${module.value.key}/${item.id}`, {
       [relationKey]: null,
-    });
+    });*/
 
     emits(
       "update:model-value",
@@ -268,13 +266,13 @@ const changeOrder = async (item: Record<string, any>, order: number) => {
 
 const addSearchedItems = async () => {
   try {
-    await Promise.all(
+    /*await Promise.all(
       searchedModelValue.value.map((item: Record<string, unknown>) => {
         client.patch(`/api/admin/${module.value.key}/${item.id}`, {
           [relationKey]: initialValues[relationKey],
         });
       })
-    );
+    );*/
 
     emits("update:model-value", [...modelValue, ...searchedModelValue.value]);
     searchedModelValue.value = [];

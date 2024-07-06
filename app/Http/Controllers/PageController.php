@@ -54,10 +54,10 @@ class PageController extends Controller
     public function web(Request $request)
     {
 
+
         $languages = Language::all();
         $path = array_key_exists('path', $request->route()->parameters) ? '/' . $request->route()->parameters['path'] : '/';
         
-
         $link = Link::wherePath($path)->with('linkable.blocks.descendants')->first();
 
         $page = $link->linkable;
@@ -65,6 +65,7 @@ class PageController extends Controller
             $query->where('key', App::getLocale());
         })->with('blocks.descendants')->first();*/
 
+ 
         if (!$page && $path !== '/404') {
            //return redirect(App::getLocale() . '/404');
         }

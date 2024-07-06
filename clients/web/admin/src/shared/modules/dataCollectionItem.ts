@@ -1,10 +1,10 @@
 import { ref } from "vue";
 
-const key = "collection";
+const key = "data-collection-item";
 
-const title = "Коллекции";
+const title = "Элементы";
 
-const icon = "mdi-database";
+const icon = "mdi-format-list-group";
 
 const headers = ref([
   {
@@ -13,7 +13,7 @@ const headers = ref([
   },
 ]);
 
-const list = true;
+const list = false;
 
 export { key, title, icon, headers, list };
 
